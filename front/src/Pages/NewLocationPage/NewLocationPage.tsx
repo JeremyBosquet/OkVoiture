@@ -4,7 +4,7 @@ import NewLocationForm from '../../Components/NewLocationForm/NewLocationForm';
 
 const NewLocationPage = () => {
     return (
-        <Grid container xs={12} display="flex" alignItems="center" justifyContent="center" direction="column" >
+        <Grid container display="flex" alignItems="center" justifyContent="center" direction="column" >
         	<NewLocationForm />
         </Grid>
     );

@@ -39,19 +39,19 @@ const NewLocationForm = () => {
         const town = e.target.selectTown.value;
         const pricePerDay = e.target.pricePerDay.value;
 
-        // verif all fields are filled
+        // Verification des champs remplis
         if (firstName === "" || email === "" || carBrand === "" || carModel === "" || carYear === "" || town === "" || startDate === null || endDate === null || pricePerDay === "" || imageUploaded === undefined) {
             setResult({ ...result, error: "Veuillez remplir tous les champs" });
             return ;
         }
 
-        // verif email is valid
+        // Verification de la syntax de l'email
         if (!email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
             setResult({ ...result, error: "Veuillez entrer un email valide" });
             return ;
         }
 
-        // verif town is in data
+        // Verification si la ville existe dans la liste des villes de Polynésie depuis la liste de l'API
         if (!data.find((t: any) => t.nom === town)) {
             setResult({ ...result, error: "Veuillez entrer une ville valide" });
             return ;
@@ -70,6 +70,7 @@ const NewLocationForm = () => {
         formData.append('pricePerDay', pricePerDay);
         formData.append('image', imageUploaded);
 
+        // Envoi des données au serveur via l'API
         await postData('/api/v1/location', formData).then((data: any) => {
             setResult({ error: "", success: data.data?.message});
 
@@ -93,7 +94,6 @@ const NewLocationForm = () => {
 
     const changeImage = (e: any) => {
         setImageUploaded(e.target.files[0]);
-        console.log(e.target.files[0])
     }
     
     return (
