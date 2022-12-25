@@ -1,4 +1,4 @@
-import { UseInterceptors, UploadedFile } from '@nestjs/common';
+import { UseInterceptors, UploadedFile, BadRequestException, UnsupportedMediaTypeException, ParseFilePipeBuilder, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator } from '@nestjs/common';
 import { Body, Controller, HttpStatus, Post, Get, Param, Res, ValidationPipe } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
@@ -16,14 +16,15 @@ export class LocationController {
     // Creer une nouvelle location
     @Post()
     @UseInterceptors(FileInterceptor('image'))
-    createNewLocation(@Body(ValidationPipe) body: newLocationDTO, @Res() res: Response, @UploadedFile() image: Express.Multer.File): void {
-        // Verification des données recues
-        if (!this.locationService.verifyLocationData(body, res))
+    async createNewLocation(@UploadedFile() image: Express.Multer.File, @Body() body: newLocationDTO, @Res() res: Response): Promise<void> {
+
+        // Verification des données recues et envoie de messages d'erreurs si besoin
+        if (!this.locationService.verifyLocationData(body, image, res))
             return ;
 
         // creation de la location dans la base de donnée
         try {
-            this.locationService.createNewLocation(body, image);
+           await this.locationService.createNewLocation(body, image);
         }
         catch (e) {
             res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({

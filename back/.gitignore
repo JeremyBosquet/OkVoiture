@@ -43,4 +43,4 @@ yarn-error.log
 /benchmarks/memory
 build/config\.gypi
 
-dist
+dist/

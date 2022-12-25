@@ -23,11 +23,11 @@ let LocationController = class LocationController {
     constructor(locationService) {
         this.locationService = locationService;
     }
-    createNewLocation(body, res, image) {
-        if (!this.locationService.verifyLocationData(body, res))
+    async createNewLocation(image, body, res) {
+        if (!this.locationService.verifyLocationData(body, image, res))
             return;
         try {
-            this.locationService.createNewLocation(body, image);
+            await this.locationService.createNewLocation(body, image);
         }
         catch (e) {
             res.status(common_2.HttpStatus.INTERNAL_SERVER_ERROR).send({
@@ -62,12 +62,12 @@ let LocationController = class LocationController {
 __decorate([
     (0, common_2.Post)(),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('image')),
-    __param(0, (0, common_2.Body)(common_2.ValidationPipe)),
-    __param(1, (0, common_2.Res)()),
-    __param(2, (0, common_1.UploadedFile)()),
+    __param(0, (0, common_1.UploadedFile)()),
+    __param(1, (0, common_2.Body)()),
+    __param(2, (0, common_2.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Location_1.newLocationDTO, Object, Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [Object, Location_1.newLocationDTO, Object]),
+    __metadata("design:returntype", Promise)
 ], LocationController.prototype, "createNewLocation", null);
 __decorate([
     (0, common_2.Get)("/all"),

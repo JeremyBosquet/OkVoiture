@@ -21,7 +21,7 @@ let DatabaseImageService = class DatabaseImageService {
         this.databaseImagesRepository = databaseImagesRepository;
     }
     async uploadDatabaseFile(dataBuffer, filename) {
-        const newFile = await this.databaseImagesRepository.create({
+        const newFile = this.databaseImagesRepository.create({
             filename,
             data: dataBuffer
         });
@@ -29,11 +29,22 @@ let DatabaseImageService = class DatabaseImageService {
         return newFile;
     }
     async getFileById(fileId) {
-        const file = await this.databaseImagesRepository.findOne({ where: { id: fileId } });
+        const file = await this.databaseImagesRepository.findOneBy({ id: fileId });
         if (!file) {
             return null;
         }
         return file;
+    }
+    isValidImageType(image) {
+        const validMimeTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+        return validMimeTypes.includes(image.mimetype);
+    }
+    isValidImage(image) {
+        if (!image || !image.buffer || !image.originalname)
+            return false;
+        if (image.size > 1e7)
+            return false;
+        return true;
     }
 };
 DatabaseImageService = __decorate([

@@ -15,5 +15,5 @@ export declare class LocationService {
     getLocationById(locationId: string): Promise<Location>;
     getAllLocations(): Promise<Location[]>;
     getImageLocationById(locationId: string): Promise<DatabaseImage>;
-    verifyLocationData(body: newLocationDTO, res: Response): boolean;
+    verifyLocationData(body: newLocationDTO, image: Express.Multer.File, res: Response): boolean;
 }

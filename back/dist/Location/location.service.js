@@ -64,7 +64,21 @@ let LocationService = class LocationService {
             return image;
         return null;
     }
-    verifyLocationData(body, res) {
+    verifyLocationData(body, image, res) {
+        if (!this.databaseFilesService.isValidImage(image)) {
+            res.status(common_1.HttpStatus.BAD_REQUEST).send({
+                message: "L'image est manquante ou invalide (taille max: 10Mo)",
+                code: common_1.HttpStatus.BAD_REQUEST
+            });
+            return false;
+        }
+        if (!this.databaseFilesService.isValidImageType(image)) {
+            res.status(common_1.HttpStatus.BAD_REQUEST).send({
+                message: "Le type de l'image est invalide, types accepté: (jpeg, jpg, png)",
+                code: common_1.HttpStatus.BAD_REQUEST
+            });
+            return false;
+        }
         if (body.firstName.length < 2 || body.firstName.length > 20) {
             res.status(common_1.HttpStatus.BAD_REQUEST).send({
                 message: "Le prenom est invalide",

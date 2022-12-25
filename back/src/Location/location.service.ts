@@ -19,7 +19,10 @@ export class LocationService {
     ) {}
 
     async createNewLocation(body: newLocationDTO, image: Express.Multer.File): Promise<void> {
+        // Upload de l'image dans la base de données
         const newImage = await this.databaseFilesService.uploadDatabaseFile(image.buffer, image.originalname);
+        
+        // Creation de la location
         const newLocation = this.locationRepository.create({
             firstName: capitalizeFirstLetter(body.firstName),
             email: body.email.toLowerCase(),
@@ -34,8 +37,10 @@ export class LocationService {
             imageId: newImage.id
         });
 
-        await this.locationRepository.save(newLocation);
+        // Sauvegarde de la location dans la base de données
+        await this.locationRepository.save(newLocation)
 
+        // Creation du loueur si il n'existe pas
         await this.renterService.createNewRenterIfNotExist({
             firstName: body.firstName,
             email: body.email
@@ -67,7 +72,23 @@ export class LocationService {
     }
 
     // Retourne true si les données sont valides, false sinon
-    verifyLocationData(body: newLocationDTO, res: Response): boolean {
+    verifyLocationData(body: newLocationDTO, image: Express.Multer.File, res: Response): boolean {
+        if (!this.databaseFilesService.isValidImage(image)) {
+            res.status(HttpStatus.BAD_REQUEST).send({
+                message: "L'image est manquante ou invalide (taille max: 10Mo)",
+                code: HttpStatus.BAD_REQUEST
+            });
+            return false;
+        }
+        
+        if (!this.databaseFilesService.isValidImageType(image)) {
+            res.status(HttpStatus.BAD_REQUEST).send({
+                message: "Le type de l'image est invalide, types accepté: (jpeg, jpg, png)",
+                code: HttpStatus.BAD_REQUEST
+            });
+            return false;
+        }
+
         if (body.firstName.length < 2 || body.firstName.length > 20) {
             res.status(HttpStatus.BAD_REQUEST).send({
                 message: "Le prenom est invalide",
