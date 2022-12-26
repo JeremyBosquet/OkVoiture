@@ -1,0 +1,37 @@
+FROM node:18-alpine
+
+ARG ARG_DB_HOST
+ENV DB_HOST=$ARG_DB_HOST
+
+ARG ARG_DB_USER
+ENV DB_USER=$ARG_DB_USER
+
+ARG ARG_DB_PASS
+ENV DB_PASS=$ARG_DB_PASS
+
+ARG ARG_DB_NAME
+ENV DB_NAME=$ARG_DB_NAME
+
+ENV DB_PORT=5432
+
+ARG ARG_BACK_PORT
+ENV PORT=$ARG_BACK_PORT
+
+ENV PATH="/pnpm:$PATH"
+ENV PNPM_HOME="/pnpm"
+RUN npm i -g pnpm
+
+ENV NODE_ENV=production
+
+WORKDIR /app
+
+RUN cd /app
+
+COPY src/. ./
+RUN pnpm install
+
+RUN pnpm run build
+
+EXPOSE 7000
+
+CMD [ "pnpm", "run", "start:prod" ]

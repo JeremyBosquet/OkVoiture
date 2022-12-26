@@ -1,29 +1,49 @@
 version: '3.5'
 
 services:
+  front:
+    container_name: okvoiture_front
+    build:
+      context: ./front
+      args:
+       - ARG_VITE_URL_API=${VITE_URL_API}
+    ports:
+      - 3000:3000
+    networks:
+      - okvoiture
+    restart: always
+  back:
+    container_name: okvoiture_back
+    depends_on:
+      - postgres
+    build:
+      context: ./back
+      args:
+       - ARG_DB_HOST=${DB_HOST}
+       - ARG_DB_NAME=${POSTGRES_DB_NAME}
+       - ARG_DB_USER=${POSTGRES_USER}
+       - ARG_DB_PASS=${POSTGRES_PASSWORD}
+    ports:
+      - 7000:7000
+    networks:
+      - okvoiture
+    restart: always
   postgres:
-    container_name: postgres_container
+    container_name: okvoitre_postgres
     image: postgres
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_DB: ${POSTGRES_DB_NAME}
       PGDATA: /data/postgres
     volumes:
-      - "./volumes/db:/data/postgres"
+      - "./volumes/db/data:/data/postgres"
     ports:
       - "5432:5432"
     networks:
-      - postgres
-    restart: unless-stopped
-
-volumes:
-  postgres:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: "./volumes/db"
+      - okvoiture
+    restart: always
 
 networks:
-  postgres:
+  okvoiture:
+    driver: bridge
