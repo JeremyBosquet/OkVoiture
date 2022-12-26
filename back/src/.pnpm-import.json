@@ -1,0 +1,9 @@
+{
+    "importers": {
+        "**": {
+            "npm": {
+                "enabled": true
+            }
+        }
+    }
+}
