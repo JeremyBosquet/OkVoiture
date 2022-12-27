@@ -25,7 +25,7 @@ const NewLocationForm = () => {
     if (error)
         return <div>error</div>
     if (!data)
-        return <div>loa ding...</div>
+        return <div>loading...</div>
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();

@@ -1,5 +1,5 @@
-import { Grid } from '@mui/material';
 import react from 'react';
+import { Grid } from '@mui/material';
 import NewLocationForm from '../../Components/NewLocationForm/NewLocationForm';
 
 const NewLocationPage = () => {

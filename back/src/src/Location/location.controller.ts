@@ -1,9 +1,9 @@
-import { UseInterceptors, UploadedFile, BadRequestException, UnsupportedMediaTypeException, ParseFilePipeBuilder, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator } from '@nestjs/common';
+import { UseInterceptors, UploadedFile, BadRequestException, UnsupportedMediaTypeException, ParseFilePipeBuilder, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator, ConsoleLogger } from '@nestjs/common';
 import { Body, Controller, HttpStatus, Post, Get, Param, Res, ValidationPipe } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
 import { Readable } from 'stream';
-import { idDto, newLocationDTO } from './DTO/Location';
+import { idDto, newLocationDTO, pageDto } from './DTO/Location';
 import { LocationService } from './location.service';
 
 @Controller('api/v1/location')
@@ -14,7 +14,7 @@ export class LocationController {
     ) {}
     
     // Creer une nouvelle location
-    @Post()
+    @Post("")
     @UseInterceptors(FileInterceptor('image'))
     async createNewLocation(@UploadedFile() image: Express.Multer.File, @Body() body: newLocationDTO, @Res() res: Response): Promise<void> {
 
@@ -49,6 +49,14 @@ export class LocationController {
         res.status(HttpStatus.OK).json(locations);
     }
     
+    // Recuperer les locations par prix croissant
+    @Get("/sortedByAscPrice")
+    async getLocationBySortedLowestPrice(@Res() res: Response): Promise<void> {
+        const locations = await this.locationService.getLocationSortedByLowestPrice();
+
+        res.status(HttpStatus.OK).json(locations);
+    }
+
     // Recuperer la location par id
     @Get("/:id")
     async getLocationById(@Param(ValidationPipe) param: idDto, @Res() res: Response): Promise<void> {
