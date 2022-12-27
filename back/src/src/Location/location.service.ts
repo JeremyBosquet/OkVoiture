@@ -157,4 +157,9 @@ export class LocationService {
         return true;
     }
 
+    async getLocationSortedByLowestPrice(): Promise<Location[]> {
+        const locations = await this.locationRepository.find({order: {pricePerDay: "ASC"}});
+        return locations;
+    }
+
 }
