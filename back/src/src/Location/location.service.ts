@@ -1,3 +1,4 @@
+import { HttpService } from "@nestjs/axios";
 import { HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Response } from "express";
@@ -16,7 +17,10 @@ export class LocationService {
         private locationRepository: Repository<Location>,
         private readonly renterService: RenterService,
         private readonly databaseFilesService: DatabaseImageService,
+        private readonly httpService: HttpService
     ) {}
+
+    private towns = null;
 
     async createNewLocation(body: newLocationDTO, image: Express.Multer.File): Promise<void> {
         // Upload de l'image dans la base de données
@@ -29,7 +33,7 @@ export class LocationService {
             carBrand: capitalizeFirstLetter(body.carBrand),
             carModel: capitalizeFirstLetter(body.carModel),
             carYear: body.carYear,
-            town: capitalizeFirstLetter(body.town),
+            town: body.town,
             startDate: body.startDate.toString(),
             endDate: body.endDate.toString(),
             pricePerDay: body.pricePerDay,
@@ -71,8 +75,28 @@ export class LocationService {
         return null;
     }
 
+    async getTowns(): Promise<string[]> {
+        if (this.towns === null) { 
+            const response = await this.httpService.get('https://geo.api.gouv.fr/departements/987/communes').toPromise();
+            if (response.status !== 200)
+                return null;
+            const towns = [];
+            
+            for (let i = 0; i < response.data.length; i++) {
+                towns.push(response.data[i].nom);
+            }
+
+            this.towns = towns;
+        }
+
+        // return response.data;
+        // console.log(this.towns)
+        return this.towns;
+    }
+
     // Retourne true si les données sont valides, false sinon
-    verifyLocationData(body: newLocationDTO, image: Express.Multer.File, res: Response): boolean {
+    async verifyLocationData(body: newLocationDTO, image: Express.Multer.File, res: Response): Promise<boolean> {
+
         if (!this.databaseFilesService.isValidImage(image)) {
             res.status(HttpStatus.BAD_REQUEST).send({
                 message: "L'image est manquante ou invalide (taille max: 10Mo)",
@@ -133,6 +157,15 @@ export class LocationService {
         if (body.town.length < 2 || body.town.length > 20) {
             res.status(HttpStatus.BAD_REQUEST).send({
                 message: "La ville est invalide",
+                code: HttpStatus.BAD_REQUEST
+            });
+            return false;
+        }
+
+        // check this.getTowns() contains body.town
+        if (!(await this.getTowns()).includes(body.town)) {
+            res.status(HttpStatus.BAD_REQUEST).send({
+                message: "La ville n'est pas valide",
                 code: HttpStatus.BAD_REQUEST
             });
             return false;

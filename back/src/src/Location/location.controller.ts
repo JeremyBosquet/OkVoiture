@@ -16,10 +16,10 @@ export class LocationController {
     // Creer une nouvelle location
     @Post("")
     @UseInterceptors(FileInterceptor('image'))
-    async createNewLocation(@UploadedFile() image: Express.Multer.File, @Body() body: newLocationDTO, @Res() res: Response): Promise<void> {
+    async createNewLocation(@UploadedFile() image: Express.Multer.File, @Body(ValidationPipe) body: newLocationDTO, @Res() res: Response): Promise<void> {
 
         // Verification des données recues et envoie de messages d'erreurs si besoin
-        if (!this.locationService.verifyLocationData(body, image, res))
+        if (!(await this.locationService.verifyLocationData(body, image, res)))
             return ;
 
         // creation de la location dans la base de donnée
@@ -37,7 +37,7 @@ export class LocationController {
         // Envoie au client un message
         res.status(HttpStatus.OK).send({
             message: "Votre véhicule a bien été ajouté.",
-            code: HttpStatus.OK
+            code: HttpStatus.CREATED
         });    
     }
 

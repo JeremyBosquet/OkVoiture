@@ -9,6 +9,7 @@ import DatabaseImageService from './Location/databaseImage.service';
 import Renter from './Location/Entities/Renter';
 import DatabaseImage from './Location/Entities/DatabaseImage';
 import RenterService from './Location/renter.service';
+import { HttpModule, HttpService } from '@nestjs/axios';
 
 @Module({
   imports: [    
@@ -29,6 +30,7 @@ import RenterService from './Location/renter.service';
     }),
     TypeOrmModule.forFeature([Location, DatabaseImage, Renter]),
     LocationModule,
+    HttpModule
   ],
   controllers: [],
   providers: [LocationService, DatabaseImageService, RenterService],
