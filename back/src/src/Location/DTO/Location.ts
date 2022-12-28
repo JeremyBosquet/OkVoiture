@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsUUID } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsNumber, IsUUID } from 'class-validator';
 
 export class newLocationDTO {
     @IsNotEmpty()
@@ -45,4 +45,30 @@ export class pageDto {
 export interface INewRenter {
     firstName: string;
     email: string;
+}
+
+export interface Ireservation {
+    firstName: string;
+    startDate: Date;
+    endDate: Date;
+    email: string;
+    createdAt: Date;
+}
+
+export class reserveLocationDTO {
+    @IsNotEmpty()
+    @IsUUID()
+    locationId: string;
+
+    @IsNotEmpty()
+    firstName: string;
+
+    @IsNotEmpty()
+    email: string;
+
+    @IsNotEmpty()
+    startDate: Date;
+
+    @IsNotEmpty()
+    endDate: Date;
 }

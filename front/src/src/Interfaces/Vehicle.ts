@@ -4,5 +4,7 @@ export interface Ivehicle {
     carModel: string,
     carYear: number,
     town: string,
-    pricePerDay: number
+    pricePerDay: number,
+    startDate: string,
+    endDate: string,
 }

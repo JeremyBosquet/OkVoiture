@@ -3,6 +3,7 @@ import { Button, ButtonBase, DialogActions, Dialog, DialogContent, Grid, Paper, 
 import { styled } from '@mui/material/styles';
 import { useState } from "react";
 import { Ivehicle } from "../../../Interfaces/Vehicle";
+import Reservation from "./Reservation/Reservation";
 
 interface props {
     vehicle: Ivehicle
@@ -10,15 +11,24 @@ interface props {
 
 const Location = (props: props) => {
     const [open, setOpen] = useState(false);
+    const [openReservation, setOpenReservation] = useState(false);
 
     const handleClickOpen = () => {
-      setOpen(true);
-    };
-  
-    const handleClose = () => {
-      setOpen(false);
-    };
+        setOpen(true);
+      };
+    
+      const handleClose = () => {
+        setOpen(false);
+      };
 
+      const handleClickOpenReservation = () => {
+        setOpenReservation(true);
+      };
+    
+      const handleCloseReservation = () => {
+        setOpenReservation(false);
+      };
+    
     const Img = styled('img')({
         margin: 'auto',
         display: 'block',
@@ -75,6 +85,21 @@ const Location = (props: props) => {
                 </DialogActions>
             </Dialog>
 
+            <Dialog
+                onClose={handleCloseReservation}
+                open={openReservation}
+                maxWidth="lg"
+            >
+                <DialogContent dividers>
+                    <Reservation vehicle={props.vehicle} />
+                </DialogContent>
+                <DialogActions>
+                    <Button autoFocus onClick={handleCloseReservation}>
+                        Fermer
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
             <Paper
                 sx={{
                 p: 2,
@@ -116,7 +141,7 @@ const Location = (props: props) => {
                                 {props.vehicle.pricePerDay}€/jour
                             </Typography>
                             <Typography sx={{ cursor: 'pointer' }} variant="body2">
-                                <Button variant="contained" color="primary" sx={{width: "100%"}} disabled>
+                                <Button variant="contained" color="primary" sx={{width: "100%"}} onClick={handleClickOpenReservation}>
                                     Réserver
                                 </Button>
                             </Typography>
