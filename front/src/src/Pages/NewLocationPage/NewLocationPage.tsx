@@ -1,12 +1,12 @@
 import react from 'react';
 import { Grid } from '@mui/material';
 import NewLocationForm from '../../Components/NewLocationForm/NewLocationForm';
-import Navbar from '../../Components/Navbar/Navbar';
+import NavBar from '../../Components/NavBar/NavBar';
 
 const NewLocationPage = () => {
     return (
         <>
-            <Navbar />
+            <NavBar />
             <Grid container display="flex" alignItems="center" justifyContent="center" direction="column" >
                 <NewLocationForm />
             </Grid>
