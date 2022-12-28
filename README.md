@@ -60,35 +60,10 @@ Il est recommandé d'utiliser le makefile.
 Vous avez désormer accès a l'application web depuis le port `3000` de la machine sur lequel vous avez suivi les instructions et également accès a l'api depuis le port `7000`.
 # Tests (avec postman):
 
-###     POST http://url_api:3000/api/v1/location
-####     Body -> form-data (copier/coller les valeurs ci-dessous):
-Tout les champs ci-dessous sont requis afin de créer une nouvelle location, ici ils sont presque déjà presque tous pré-rempli avec un exemple mise à part "image", où vous devez ajouter une image au format (png/jpg/jpeg). 
+##### /!\ L'image est requise afin de poster une nouvelle location.
 
-    [{"key":"firstName","value":"Jeremy","type":"text","enabled":true},{"key":"email","value":"professionnel@bosquetjeremy.fr","type":"text","enabled":true},{"key":"carBrand","value":"Chevrolet","type":"text","enabled":true},{"key":"carModel","value":"Aveo","type":"text","enabled":true},{"key":"carYear","value":"2012","type":"text","enabled":true},{"key":"town","value":"Papeete","type":"text","enabled":true},{"key":"startDate","value":"25-12-2022","type":"text","enabled":true},{"key":"endDate","value":"26-12-2022","type":"text","enabled":true},{"key":"pricePerDay","value":"100","type":"text","enabled":true},{"key":"image","type":"file","enabled":true,"value":[]}]
+## Documentation de l'api (contient des tests): 
+### https://documenter.getpostman.com/view/14578810/2s8Z6yVXeS
+> Vous pouvez egalement importer le fichier `OkVoiture.postman_collection.json` afin de pouvoir faire des tests depuis celui ci.
 
-
-# API Reference:
-
-    Nouvelle location : 
-        POST /api/v1/location/ 
-            data: {
-                firstName: string;
-                email: string;
-                carBrand: string;
-                carModel: string;
-                carYear: number;
-                town: string;
-                startDate: Date;
-                endDate: Date;
-                pricePerDay: number;
-                image: Express.Multer.File;
-            }
-
-    Recuperer toutes les locations:
-        GET /api/v1/location/all
-
-    Recuperer une location:
-        GET /api/v1/location/:id
-
-    Recuperer l'image d'une location:
-        GET /api/v1/location/image/:id d'une location
+![Image](https://i.postimg.cc/bwQTjYvh/image.png)
