@@ -89,8 +89,6 @@ export class LocationService {
             this.towns = towns;
         }
 
-        // return response.data;
-        // console.log(this.towns)
         return this.towns;
     }
 
@@ -146,7 +144,7 @@ export class LocationService {
             return false;
         }
 
-        if (body.carYear < 1900 || body.carYear > 2021) {
+        if (body.carYear < 1900 || body.carYear > new Date().getFullYear()) {
             res.status(HttpStatus.BAD_REQUEST).send({
                 message: "L'annee du vehicule est invalide",
                 code: HttpStatus.BAD_REQUEST
@@ -182,6 +180,14 @@ export class LocationService {
         if (body.pricePerDay <= 0) {
             res.status(HttpStatus.BAD_REQUEST).send({
                 message: "Le prix par jour doit etre superieur a 0",
+                code: HttpStatus.BAD_REQUEST
+            });
+            return false;
+        }
+
+        if (body.pricePerDay > 9999) {
+            res.status(HttpStatus.BAD_REQUEST).send({
+                message: "Le prix par jour est trop élevé (max: 9999)",
                 code: HttpStatus.BAD_REQUEST
             });
             return false;
