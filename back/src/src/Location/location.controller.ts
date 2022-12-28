@@ -3,7 +3,7 @@ import { Body, Controller, HttpStatus, Post, Get, Param, Res, ValidationPipe } f
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
 import { Readable } from 'stream';
-import { idDto, newLocationDTO, pageDto } from './DTO/Location';
+import { idDto, newLocationDTO, pageDto, reserveLocationDTO } from './DTO/Location';
 import { LocationService } from './location.service';
 
 @Controller('api/v1/location')
@@ -80,5 +80,29 @@ export class LocationController {
         // Affiche l'image
         const stream = Readable.from(image.data);
         stream.pipe(res);
+    }
+
+    @Post("/reservation")
+    async reservationLocation(@Body(ValidationPipe) body: reserveLocationDTO, @Res() res: Response): Promise<void> {
+        // Verification des données recues et envoie de messages d'erreurs si besoin
+        if (!(await this.locationService.verifyReservationData(body, res)))
+            return ;
+
+        // creation de la reservation dans la base de donnée
+        try {
+           await this.locationService.createNewReservationLocation(body);
+        }
+        catch (e) {
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
+                message: "Une erreur est survenue, veuillez réessayer plus tard",
+                code: HttpStatus.INTERNAL_SERVER_ERROR
+            });
+            return ;
+        }
+
+        res.status(HttpStatus.OK).json({
+            message: "Votre réservation a bien été prise en compte", 
+            code: HttpStatus.OK
+        });
     }
 }

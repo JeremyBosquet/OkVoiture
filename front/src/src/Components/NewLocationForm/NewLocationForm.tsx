@@ -57,7 +57,7 @@ const NewLocationForm = () => {
         }
 
         // Verification de la syntax de l'email
-        if (!email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
+        if (!email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,10}$/)) {
             setResult({ ...result, error: "Veuillez entrer un email valide" });
             return ;
         }

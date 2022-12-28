@@ -1,4 +1,5 @@
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Ireservation } from '../DTO/Location';
 import DatabaseImage from './DatabaseImage';
  
 @Entity("locations")
@@ -32,15 +33,17 @@ class Location {
 
     @Column()
     pricePerDay: number;
-
+    
     @JoinColumn({ name: 'imageId' })
     @OneToOne(() => DatabaseImage, {nullable: true})
     public image?: DatabaseImage;
-
+    
     @Column({ nullable: true })
     public imageId?: string;
+    
+    @Column({type: 'jsonb'})
+    reservations: Ireservation[];
 
-    //created_at
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     createdAt: Date;
 }

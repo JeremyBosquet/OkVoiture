@@ -4,11 +4,11 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Response } from "express";
 import { Repository } from "typeorm";
 import DatabaseImageService from "./databaseImage.service";
-import { newLocationDTO } from "./DTO/Location";
+import { Ireservation, newLocationDTO, reserveLocationDTO } from "./DTO/Location";
 import DatabaseImage from "./Entities/DatabaseImage";
 import Location from "./Entities/Location";
 import RenterService from "./renter.service";
-import { capitalizeFirstLetter } from "./Utils/Utils";
+import { capitalizeFirstLetter, changeDateFormat, checkEmail, convertDateStringToDate, createRes } from "./Utils/Utils";
 
 @Injectable()
 export class LocationService {
@@ -38,7 +38,8 @@ export class LocationService {
             endDate: body.endDate.toString(),
             pricePerDay: body.pricePerDay,
             image: newImage,
-            imageId: newImage.id
+            imageId: newImage.id,
+            reservations: []
         });
 
         // Sauvegarde de la location dans la base de données
@@ -97,105 +98,146 @@ export class LocationService {
         return this.towns;
     }
 
+    async getLocationSortedByLowestPrice(): Promise<Location[]> {
+        const locations = await this.locationRepository.find({order: {pricePerDay: "ASC"}});
+        return locations;
+    }
+
+    isAlreadyReservedForTheseDates(location: Location, startDate: Date, endDate: Date): boolean {
+        const reservations = location.reservations;
+
+        for (let i = 0; i < reservations.length; i++) {
+            const reservation : Ireservation = reservations[i];
+            const reservationStartDate = changeDateFormat(reservation.startDate);
+            const reservationEndDate = changeDateFormat(reservation.endDate);
+
+            if (startDate >= reservationStartDate && startDate <= reservationEndDate ||
+                endDate >= reservationStartDate && endDate <= reservationEndDate) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    async createNewReservationLocation(body: reserveLocationDTO): Promise<void> {
+        const location = await this.locationRepository.findOneBy({id: body.locationId});
+
+        const newReservation : Ireservation = {
+            firstName: capitalizeFirstLetter(body.firstName),
+            startDate: body.startDate,
+            endDate: body.endDate,
+            email: body.email.toLowerCase(),
+            createdAt: new Date()
+        }
+
+        location.reservations.push(newReservation);
+        await this.locationRepository.save(location);
+    }
+
     // Retourne true si les données sont valides, false sinon
     async verifyLocationData(body: newLocationDTO, image: Express.Multer.File, res: Response): Promise<boolean> {
 
         if (!this.databaseFilesService.isValidImage(image)) {
-            res.status(HttpStatus.BAD_REQUEST).send({
-                message: "L'image est manquante ou invalide (taille max: 10Mo)",
-                code: HttpStatus.BAD_REQUEST
-            });
+            createRes(HttpStatus.BAD_REQUEST, "L'image est manquante ou invalide (taille max: 10Mo)", res);
             return false;
         }
         
         if (!this.databaseFilesService.isValidImageType(image)) {
-            res.status(HttpStatus.BAD_REQUEST).send({
-                message: "Le type de l'image est invalide, types accepté: (jpeg, jpg, png)",
-                code: HttpStatus.BAD_REQUEST
-            });
+            createRes(HttpStatus.BAD_REQUEST, "Le type de l'image est invalide, types accepté: (jpeg, jpg, png)", res);
             return false;
         }
 
         if (body.firstName.length < 2 || body.firstName.length > 20) {
-            res.status(HttpStatus.BAD_REQUEST).send({
-                message: "Le prenom est invalide",
-                code: HttpStatus.BAD_REQUEST
-            });
+            createRes(HttpStatus.BAD_REQUEST, "Le prenom est invalide", res);
             return false;
         }
 
-        if ((body.email.length < 5 || body.email.length > 50) || 
-            !body.email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
-            res.status(HttpStatus.BAD_REQUEST).send({
-                message: "L'adresse email est invalide",
-                code: HttpStatus.BAD_REQUEST
-            });
+        if (!checkEmail(body.email)) {
+            createRes(HttpStatus.BAD_REQUEST, "L'adresse email est invalide", res);
             return false;
         }
 
         if (body.carBrand.length < 2 || body.carBrand.length > 20) {
-            res.status(HttpStatus.BAD_REQUEST).send({
-                message: "La marque du vehicule est invalide",
-                code: HttpStatus.BAD_REQUEST
-            });
+            createRes(HttpStatus.BAD_REQUEST, "La marque du vehicule est invalide", res);
             return false;
         }
 
         if (body.carModel.length < 2 || body.carModel.length > 20) {
-            res.status(HttpStatus.BAD_REQUEST).send({
-                message: "Le modele du vehicule est invalide",
-                code: HttpStatus.BAD_REQUEST
-            });
+            createRes(HttpStatus.BAD_REQUEST, "Le modele du vehicule est invalide", res);
             return false;
         }
 
         if (body.carYear < 1900 || body.carYear > 2021) {
-            res.status(HttpStatus.BAD_REQUEST).send({
-                message: "L'annee du vehicule est invalide",
-                code: HttpStatus.BAD_REQUEST
-            });
+            createRes(HttpStatus.BAD_REQUEST, "L'annee du vehicule est invalide", res);
             return false;
         }
 
         if (body.town.length < 2 || body.town.length > 20) {
-            res.status(HttpStatus.BAD_REQUEST).send({
-                message: "La ville est invalide",
-                code: HttpStatus.BAD_REQUEST
-            });
+            createRes(HttpStatus.BAD_REQUEST, "La ville est invalide", res);
             return false;
         }
 
         const towns = await this.getTowns();
         if (towns !== null && !towns.includes(body.town)) {
-            res.status(HttpStatus.BAD_REQUEST).send({
-                message: "La ville n'est pas valide",
-                code: HttpStatus.BAD_REQUEST
-            });
+            createRes(HttpStatus.BAD_REQUEST, "La ville n'est pas valide", res);
             return false;
         }
 
         if (body.startDate > body.endDate) {
-            res.status(HttpStatus.BAD_REQUEST).send({
-                message: "La date de debut doit etre inferieur a la date de fin",
-                code: HttpStatus.BAD_REQUEST
-            });
+            createRes(HttpStatus.BAD_REQUEST, "La date de debut doit etre inferieur a la date de fin", res);
             return false;
         }
 
         if (body.pricePerDay <= 0) {
-            res.status(HttpStatus.BAD_REQUEST).send({
-                message: "Le prix par jour doit etre superieur a 0",
-                code: HttpStatus.BAD_REQUEST
-            });
+            createRes(HttpStatus.BAD_REQUEST, "Le prix par jour doit etre superieur a 0", res);
             return false;
         }
 
         return true;
     }
 
-    async getLocationSortedByLowestPrice(): Promise<Location[]> {
-        const locations = await this.locationRepository.find({order: {pricePerDay: "ASC"}});
-        return locations;
-    }
+    // Retourne true si les données sont valides, false sinon
+    async verifyReservationData(body: reserveLocationDTO, res: Response): Promise<boolean> {
+        const location = await this.locationRepository.findOneBy({id: body.locationId});
+        const startDate = changeDateFormat(body.startDate);
+        const endDate = changeDateFormat(body.endDate);
 
+        if (!location) {
+            createRes(HttpStatus.BAD_REQUEST, "Aucune location ne correspond a cet id", res);
+            return false;
+        }        
+
+        if (body.firstName.length < 2 || body.firstName.length > 20) {
+            createRes(HttpStatus.BAD_REQUEST, "Le prenom est invalide", res);
+            return false;
+        }
+
+        if (!checkEmail(body.email)) {
+            createRes(HttpStatus.BAD_REQUEST, "L'adresse email est invalide", res);
+            return false;
+        }
+
+        if (body.email.toLowerCase() === location.email.toLowerCase()) {
+            createRes(HttpStatus.BAD_REQUEST, "Vous ne pouvez pas reserver votre propre location", res);
+            return false;
+        }
+
+        if (startDate > endDate) {
+            createRes(HttpStatus.BAD_REQUEST, "La date de debut doit etre inferieur a la date de fin", res);
+            return false;
+        }
+
+        if ((startDate < convertDateStringToDate(location.startDate) || startDate > convertDateStringToDate(location.endDate)) ||
+            (endDate < convertDateStringToDate(location.startDate) || endDate > convertDateStringToDate(location.endDate))) {
+            createRes(HttpStatus.BAD_REQUEST, "La location n'est pas disponible pour cette periode", res);
+            return false;
+        }
+
+        if (this.isAlreadyReservedForTheseDates(location, startDate, endDate)) {
+            createRes(HttpStatus.BAD_REQUEST, "La location n'est pas disponible pour cette periode", res);
+            return false;
+        }
+
+        return true;
+    }
 }
