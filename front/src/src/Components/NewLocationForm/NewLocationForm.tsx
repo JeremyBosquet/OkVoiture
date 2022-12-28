@@ -15,7 +15,6 @@ const NewLocationForm = () => {
     const [startDate, setStartDate] = useState<Dayjs | null>(minDateStart);
     const [endDate, setEndDate] = useState<Dayjs | null>(minDateEnd);
     const [imageUploaded, setImageUploaded] = useState<File | undefined>(undefined);
-
     const [submitting, setSubmitting] = useState<boolean>(false);
 
     const [form, setForm] = useState<{carBrand: string, carModel: string, carYear: string, town: string, pricePerDay: string, image: File}>({
@@ -94,12 +93,6 @@ const NewLocationForm = () => {
             setStartDate(minDateStart);
             setEndDate(minDateEnd);
             setImageUploaded(undefined);
-            setForm({carBrand: "",
-                    carModel: "",
-                    carYear: "",
-                    town: "",
-                    pricePerDay: "",
-                    image: new File([], "image")})
         }).catch((err) => {
             setResult({ success: "", error: err.response.data?.message });
         });
@@ -154,86 +147,91 @@ const NewLocationForm = () => {
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Typography variant="h5" sx={{marginTop: "20px", marginBottom: "15px"}}>Proposer mon vehicule</Typography>
-            {
-                result.success !== "" && <Typography variant="body1" sx={{color: "green"}}>Votre vehicule est maintenant propos</Typography>
-            }
             <Grid container display="flex" justifyContent="space-around">
-                <Grid item xs={11} display="flex" justifyContent="center">
-                    <form onSubmit={handleSubmit}>
-                        <Grid container spacing={1.7} maxWidth="sm">
-                            <Grid item xs={12}>
-                                <TextField name="firstName" id="firstName" label="Prénom" type="text" variant="outlined"  fullWidth required/>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField name="email" id="email" label="Email" type="email" variant="outlined" fullWidth required/>
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField name="carBrand" id="carBrand" label="Marque du véhicule" type="text" variant="outlined" onChange={(e) => changeForm(e)} fullWidth required/>
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField name="carModel" id="carModel" label="Modele du véhicule" type="text" variant="outlined" onChange={(e) => changeForm(e)} fullWidth required/>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField name="carYear" id="carYear" label="Année du véhicule" type="number" variant="outlined" onChange={handleYearChange} fullWidth required/>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <SelectTown data={data} setForm={setForm} form={form} />
-                            </Grid>
-                                
-                            <Grid item xs={12} sm={6}>
-                                <DesktopDatePicker
-                                    label="Date de début"
-                                    inputFormat="DD/MM/YYYY"
-                                    minDate={minDateStart}
-                                    value={startDate}
-                                    onChange={handleChangeStart}
-                                    renderInput={(params: any) => <TextField {...params} fullWidth required/>}
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <DesktopDatePicker
-                                    label="Date de fin"
-                                    inputFormat="DD/MM/YYYY"
-                                    minDate={minDateEnd}
-                                    value={endDate}
-                                    onChange={handleChangeEnd}
-                                    renderInput={(params: any) => <TextField {...params} fullWidth required/>}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField name="pricePerDay" id="pricePerDay" label="Prix par jour" type="number" variant="outlined"  onChange={handlePriceChange} fullWidth required/>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Button variant="contained" component="label" fullWidth> 
-                                    Ajouter une photo du véhicule
-                                    <input hidden accept="image/*" type="file" onChange={(e) => changeImage(e)} />
-                                </Button>
-                                { 
-                                    imageUploaded && <Typography variant="h6">{imageUploaded.name}</Typography> 
-                                }
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Button variant="contained" color="primary" component="label" fullWidth>
-                                    {
-                                        submitting ? <CircularProgress color="inherit" size={20} />
-                                        : 
-                                        <>Louer</>
-                                    }
-                                    <button hidden type="submit"></button>
-                                </Button>
-                            </Grid>
-                            <Grid item xs={12}>
-                                { result.error && <Alert severity="error" >{result.error}</Alert> }
-                                { result.success && <Alert severity="success">{result.success}</Alert> }
-                            </Grid>
+                {
+                    result.success === "" ?
+                        <Grid item xs={11} display="flex" justifyContent="center">
+                            <form onSubmit={handleSubmit}>
+                                <Grid container spacing={1.7} maxWidth="sm">
+                                    <Grid item xs={12}>
+                                        <TextField name="firstName" id="firstName" label="Prénom" type="text" variant="outlined"  fullWidth required/>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField name="email" id="email" label="Email" type="email" variant="outlined" fullWidth required/>
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <TextField name="carBrand" id="carBrand" label="Marque du véhicule" type="text" variant="outlined" onChange={(e) => changeForm(e)} fullWidth required/>
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <TextField name="carModel" id="carModel" label="Modele du véhicule" type="text" variant="outlined" onChange={(e) => changeForm(e)} fullWidth required/>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField name="carYear" id="carYear" label="Année du véhicule" type="number" variant="outlined" onChange={handleYearChange} fullWidth required/>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <SelectTown data={data} setForm={setForm} form={form} />
+                                    </Grid>
+                                        
+                                    <Grid item xs={12} sm={6}>
+                                        <DesktopDatePicker
+                                            label="Date de début"
+                                            inputFormat="DD/MM/YYYY"
+                                            minDate={minDateStart}
+                                            value={startDate}
+                                            onChange={handleChangeStart}
+                                            renderInput={(params: any) => <TextField {...params} fullWidth required/>}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <DesktopDatePicker
+                                            label="Date de fin"
+                                            inputFormat="DD/MM/YYYY"
+                                            minDate={minDateEnd}
+                                            value={endDate}
+                                            onChange={handleChangeEnd}
+                                            renderInput={(params: any) => <TextField {...params} fullWidth required/>}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField name="pricePerDay" id="pricePerDay" label="Prix par jour" type="number" variant="outlined"  onChange={handlePriceChange} fullWidth required/>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Button variant="contained" component="label" fullWidth> 
+                                            Ajouter une photo du véhicule
+                                            <input hidden accept="image/*" type="file" onChange={(e) => changeImage(e)} />
+                                        </Button>
+                                        { 
+                                            imageUploaded && <Typography variant="h6">{imageUploaded.name}</Typography> 
+                                        }
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Button variant="contained" color="primary" component="label" fullWidth>
+                                            {
+                                                submitting ? <CircularProgress color="inherit" size={20} />
+                                                : 
+                                                <>Louer</>
+                                            }
+                                            <button hidden type="submit"></button>
+                                        </Button>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        { result.error && <Alert severity="error" >{result.error}</Alert> }
+                                        { result.success && <Alert severity="success">{result.success}</Alert> }
+                                    </Grid>
+                                </Grid>
+                            </form>
                         </Grid>
-                    </form>
-                </Grid>
 
+                    : 
+                    <Grid item xs={10} md={5} lg={3}>
+                        { result.success && <Alert severity="success">{result.success}</Alert> }
+                    </Grid>
+                }
                 <Grid container display="flex" direction="column" alignItems="center">
                     <Typography variant="h5" sx={{marginTop: "20px", marginBottom: "15px"}}>Aperçu</Typography>
                     <LocationPreview vehicle={form}/>
                 </Grid>
+
             </Grid>
         </LocalizationProvider>
     );
