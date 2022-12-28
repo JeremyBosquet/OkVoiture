@@ -136,6 +136,8 @@ export class LocationService {
 
     // Retourne true si les données sont valides, false sinon
     async verifyLocationData(body: newLocationDTO, image: Express.Multer.File, res: Response): Promise<boolean> {
+        const startDate = changeDateFormat(body.startDate);
+        const endDate = changeDateFormat(body.endDate);
 
         if (!this.databaseFilesService.isValidImage(image)) {
             createRes(HttpStatus.BAD_REQUEST, "L'image est manquante ou invalide (taille max: 10Mo)", res);
@@ -183,7 +185,7 @@ export class LocationService {
             return false;
         }
 
-        if (body.startDate > body.endDate) {
+        if (startDate > endDate) {
             createRes(HttpStatus.BAD_REQUEST, "La date de debut doit etre inferieur a la date de fin", res);
             return false;
         }
