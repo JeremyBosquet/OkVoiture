@@ -29,7 +29,7 @@ const SelectTown = (props: props) => {
                 options={towns}
                 noOptionsText="Ville introuvable"
                 renderInput={(params) => <TextField {...params} label="Ville" fullWidth required />}
-                onChange={(e) => props.setForm({...props.form, town: e.target.textContent})}
+                onChange={(e) => props.setForm({...props.form, town: (e.target as HTMLElement).textContent})}
 
             />
         </>
