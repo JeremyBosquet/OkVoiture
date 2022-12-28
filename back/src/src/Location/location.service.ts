@@ -75,22 +75,25 @@ export class LocationService {
         return null;
     }
 
+    // Recupere toutes les villes de polynesie francaise depuis l'api de geo.gouv.fr et les retourne en les ajoutant dans la variable towns
     async getTowns(): Promise<string[]> {
         if (this.towns === null) { 
-            const response = await this.httpService.get('https://geo.api.gouv.fr/departements/987/communes').toPromise();
-            if (response.status !== 200)
+            try {
+                const response = await this.httpService.get('https://geo.api.gouv.fr/departements/987/communes').toPromise();
+                if (response.status !== 200)
+                    return null;
+                const towns = [];
+                
+                for (let i = 0; i < response.data.length; i++) {
+                    towns.push(response.data[i].nom);
+                }
+    
+                this.towns = towns;
+            } catch (error) {
                 return null;
-            const towns = [];
-            
-            for (let i = 0; i < response.data.length; i++) {
-                towns.push(response.data[i].nom);
             }
-
-            this.towns = towns;
         }
 
-        // return response.data;
-        // console.log(this.towns)
         return this.towns;
     }
 
@@ -162,8 +165,8 @@ export class LocationService {
             return false;
         }
 
-        // check this.getTowns() contains body.town
-        if (!(await this.getTowns()).includes(body.town)) {
+        const towns = await this.getTowns();
+        if (towns !== null && !towns.includes(body.town)) {
             res.status(HttpStatus.BAD_REQUEST).send({
                 message: "La ville n'est pas valide",
                 code: HttpStatus.BAD_REQUEST
