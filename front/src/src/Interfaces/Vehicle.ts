@@ -7,4 +7,10 @@ export interface Ivehicle {
     pricePerDay: number,
     startDate: string,
     endDate: string,
+    reservations: Ireservation[]
+}
+
+export interface Ireservation {
+    startDate: string,
+    endDate: string
 }

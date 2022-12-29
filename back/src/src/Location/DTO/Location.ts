@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsNumber, IsUUID } from 'class-validator';
+import { IsNotEmpty, IsUUID } from 'class-validator';
 
 export class newLocationDTO {
     @IsNotEmpty()
@@ -55,6 +55,12 @@ export interface Ireservation {
     createdAt: Date;
 }
 
+export interface IexposedReservation {
+    startDate: Date;
+    endDate: Date;
+    createdAt: Date;
+}
+
 export class reserveLocationDTO {
     @IsNotEmpty()
     @IsUUID()
@@ -71,4 +77,16 @@ export class reserveLocationDTO {
 
     @IsNotEmpty()
     endDate: Date;
+}
+
+export interface IexposedLocation {
+    id: string;
+    carBrand: string;
+    carModel: string;
+    carYear: number;
+    town: string;
+    pricePerDay: number;
+    startDate: string;
+    endDate: string;
+    reservations: IexposedReservation[];
 }

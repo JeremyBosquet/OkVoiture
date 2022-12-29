@@ -4,7 +4,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Response } from "express";
 import { Repository } from "typeorm";
 import DatabaseImageService from "./databaseImage.service";
-import { Ireservation, newLocationDTO, reserveLocationDTO } from "./DTO/Location";
+import { IexposedLocation, IexposedReservation, Ireservation, newLocationDTO, reserveLocationDTO } from "./DTO/Location";
 import DatabaseImage from "./Entities/DatabaseImage";
 import Location from "./Entities/Location";
 import RenterService from "./renter.service";
@@ -98,11 +98,53 @@ export class LocationService {
         return this.towns;
     }
 
-    async getLocationSortedByLowestPrice(): Promise<Location[]> {
-        const locations = await this.locationRepository.find({order: {pricePerDay: "ASC"}});
-        return locations;
+    // Retourne la liste des reservations d'une location sans les informations sensibles
+    async getReservationsByLocation(location: Location): Promise<IexposedReservation[]> {
+        const exposedReservations : IexposedReservation[] = [];
+        for (let i = 0; i < location.reservations.length; i++) {
+            const reservation = location.reservations[i];
+            const exposedReservation : IexposedReservation = {
+                startDate: reservation.startDate,
+                endDate: reservation.endDate,
+                createdAt: reservation.createdAt
+            }
+            exposedReservations.push(exposedReservation);
+        }
+
+        return exposedReservations;
     }
 
+    // Retourne toutes les locations triées par prix croissant sans les informations sensibles
+    async getLocationSortedByLowestPrice(): Promise<IexposedLocation[]> {
+        try {
+            const locations = await this.locationRepository.find({order: {pricePerDay: "ASC"}});
+
+            const exposedLocations : IexposedLocation[] = [];
+
+            for (let i = 0; i < locations.length; i++) {
+                const location = locations[i];
+                const exposedLocation : IexposedLocation = {
+                    id: location.id,
+                    carBrand: location.carBrand,
+                    carModel: location.carModel,
+                    carYear: location.carYear,
+                    town: location.town,
+                    startDate: location.startDate,
+                    endDate: location.endDate,
+                    pricePerDay: location.pricePerDay,
+                    reservations: await this.getReservationsByLocation(location)
+                }
+
+                exposedLocations.push(exposedLocation);
+            }
+
+            return exposedLocations;
+        } catch (error) {
+            return [];
+        }
+    }
+
+    // return true si une reservation est deja dans les dates données, false sinon
     isAlreadyReservedForTheseDates(location: Location, startDate: Date, endDate: Date): boolean {
         const reservations = location.reservations;
 
@@ -119,6 +161,7 @@ export class LocationService {
         return false;
     }
 
+    // Crée une nouvelle reservation pour la location si les données sont valides
     async createNewReservationLocation(body: reserveLocationDTO): Promise<void> {
         const location = await this.locationRepository.findOneBy({id: body.locationId});
 

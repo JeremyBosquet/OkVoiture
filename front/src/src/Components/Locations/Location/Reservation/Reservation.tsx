@@ -4,8 +4,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
 import React, { useState } from 'react'
 import { postData } from '../../../../API/Post';
-import { Ivehicle } from '../../../../Interfaces/Vehicle';
-import convertDateStringToDate from '../../../../utils/utils'
+import { Ireservation, Ivehicle } from '../../../../Interfaces/Vehicle';
+import { convertDateStringToDate, isInReservations } from '../../../../utils/utils'
 
 interface props {
     vehicle: Ivehicle;
@@ -88,17 +88,27 @@ const Reservation = (props: props) => {
                                 <DesktopDatePicker
                                     label="Date de début"
                                     inputFormat="DD/MM/YYYY"
+                                    disablePast={true}
+                                    shouldDisableDate={(day) => {
+                                        const dayString = day.format('DD-MM-YYYY');
+                                        return isInReservations(props.vehicle.reservations, dayString);
+                                    }}
                                     minDate={dateStartDefault}
                                     maxDate={dateEndDefault}
                                     value={startDate}
                                     onChange={handleChangeStart}
                                     renderInput={(params: any) => <TextField {...params} fullWidth required/>}
-                                />
+                                    />
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <DesktopDatePicker
                                     label="Date de fin"
                                     inputFormat="DD/MM/YYYY"
+                                    disablePast={true}
+                                    shouldDisableDate={(day) => {
+                                        const dayString = day.format('DD-MM-YYYY');
+                                        return isInReservations(props.vehicle.reservations, dayString);
+                                    }}
                                     minDate={startDate}
                                     maxDate={dateEndDefault}
                                     value={endDate}
