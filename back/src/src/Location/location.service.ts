@@ -1,10 +1,11 @@
 import { HttpService } from "@nestjs/axios";
 import { HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { plainToClass, plainToInstance } from "class-transformer";
 import { Response } from "express";
 import { Repository } from "typeorm";
 import DatabaseImageService from "./databaseImage.service";
-import { IexposedLocation, IexposedReservation, Ireservation, newLocationDTO, reserveLocationDTO } from "./DTO/Location";
+import { newLocationDTO, Reservation, reserveLocationDTO } from "./DTO/Location";
 import DatabaseImage from "./Entities/DatabaseImage";
 import Location from "./Entities/Location";
 import RenterService from "./renter.service";
@@ -55,13 +56,15 @@ export class LocationService {
     // Retourne la location si elle existe
     async getLocationById(locationId: string): Promise<Location> {
         const location = await this.locationRepository.findOneBy({id: locationId});
-        return location;
+
+        return plainToInstance(Location, location, { excludeExtraneousValues: true });
     }
 
     // Retourne toutes les locations
     async getAllLocations(): Promise<Location[]> {
         const locations = await this.locationRepository.find();
-        return locations;
+
+        return plainToInstance(Location, locations, { excludeExtraneousValues: true });
     }
 
     // Retourne l'image de la location si elle existe, null sinon
@@ -99,46 +102,20 @@ export class LocationService {
     }
 
     // Retourne la liste des reservations d'une location sans les informations sensibles
-    async getReservationsByLocation(location: Location): Promise<IexposedReservation[]> {
-        const exposedReservations : IexposedReservation[] = [];
-        for (let i = 0; i < location.reservations.length; i++) {
-            const reservation = location.reservations[i];
-            const exposedReservation : IexposedReservation = {
-                startDate: reservation.startDate,
-                endDate: reservation.endDate,
-                createdAt: reservation.createdAt
-            }
-            exposedReservations.push(exposedReservation);
-        }
-
-        return exposedReservations;
+    async getReservationsByLocation(location: Location): Promise<Reservation[]> {
+        return plainToInstance(Reservation, location.reservations, { excludeExtraneousValues: true });
     }
 
     // Retourne toutes les locations triées par prix croissant sans les informations sensibles
-    async getLocationSortedByLowestPrice(): Promise<IexposedLocation[]> {
+    async getLocationSortedByLowestPrice(): Promise<Location[]> {
         try {
             const locations = await this.locationRepository.find({order: {pricePerDay: "ASC"}});
 
-            const exposedLocations : IexposedLocation[] = [];
-
             for (let i = 0; i < locations.length; i++) {
-                const location = locations[i];
-                const exposedLocation : IexposedLocation = {
-                    id: location.id,
-                    carBrand: location.carBrand,
-                    carModel: location.carModel,
-                    carYear: location.carYear,
-                    town: location.town,
-                    startDate: location.startDate,
-                    endDate: location.endDate,
-                    pricePerDay: location.pricePerDay,
-                    reservations: await this.getReservationsByLocation(location)
-                }
-
-                exposedLocations.push(exposedLocation);
+                locations[i].reservations = await this.getReservationsByLocation(locations[i]);
             }
 
-            return exposedLocations;
+            return (plainToInstance(Location, locations, { excludeExtraneousValues: true }));
         } catch (error) {
             return [];
         }
@@ -149,7 +126,7 @@ export class LocationService {
         const reservations = location.reservations;
 
         for (let i = 0; i < reservations.length; i++) {
-            const reservation : Ireservation = reservations[i];
+            const reservation : Reservation = reservations[i];
             const reservationStartDate = changeDateFormat(reservation.startDate);
             const reservationEndDate = changeDateFormat(reservation.endDate);
 
@@ -165,7 +142,7 @@ export class LocationService {
     async createNewReservationLocation(body: reserveLocationDTO): Promise<void> {
         const location = await this.locationRepository.findOneBy({id: body.locationId});
 
-        const newReservation : Ireservation = {
+        const newReservation : Reservation = {
             firstName: capitalizeFirstLetter(body.firstName),
             startDate: body.startDate,
             endDate: body.endDate,

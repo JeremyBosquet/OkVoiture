@@ -1,3 +1,4 @@
+import { Expose } from 'class-transformer';
 import { IsNotEmpty, IsUUID } from 'class-validator';
 
 export class newLocationDTO {
@@ -42,23 +43,28 @@ export class pageDto {
     page: number;
 }
 
+export class Reservation {
+    @IsNotEmpty()
+    firstName: string;
+    
+    @Expose()
+    @IsNotEmpty()
+    startDate: Date;
+    
+    @Expose()
+    @IsNotEmpty()
+    endDate: Date;
+    
+    @IsNotEmpty()
+    email: string;
+    
+    @Expose()
+    createdAt: Date;
+}
+
 export interface INewRenter {
     firstName: string;
     email: string;
-}
-
-export interface Ireservation {
-    firstName: string;
-    startDate: Date;
-    endDate: Date;
-    email: string;
-    createdAt: Date;
-}
-
-export interface IexposedReservation {
-    startDate: Date;
-    endDate: Date;
-    createdAt: Date;
 }
 
 export class reserveLocationDTO {
@@ -79,14 +85,3 @@ export class reserveLocationDTO {
     endDate: Date;
 }
 
-export interface IexposedLocation {
-    id: string;
-    carBrand: string;
-    carModel: string;
-    carYear: number;
-    town: string;
-    pricePerDay: number;
-    startDate: string;
-    endDate: string;
-    reservations: IexposedReservation[];
-}
