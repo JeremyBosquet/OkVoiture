@@ -4,8 +4,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
 import React, { useState } from 'react'
 import { postData } from '../../../../API/Post';
-import { Ireservation, Ivehicle } from '../../../../Interfaces/Vehicle';
-import { convertDateStringToDate, isInReservations } from '../../../../utils/utils'
+import { Ivehicle } from '../../../../Interfaces/Vehicle';
+import { calcPrice, convertDateStringToDate, isInReservations } from '../../../../utils/utils'
 
 interface props {
     vehicle: Ivehicle;
@@ -15,7 +15,7 @@ const Reservation = (props: props) => {
     const dateStartDefault = (dayjs(new Date(convertDateStringToDate(props.vehicle.startDate))));
     const dateEndDefault = (dayjs(new Date(convertDateStringToDate(props.vehicle.endDate))));
     const [startDate, setStartDate] = useState<Dayjs | undefined>(dateStartDefault);
-    const [endDate, setEndDate] = useState<Dayjs | undefined>(dateEndDefault);
+    const [endDate, setEndDate] = useState<Dayjs | undefined>(dateStartDefault);
     const [submitting, setSubmitting] = useState<boolean>(false);
 
     const [result, setResult] = useState<{error: string, success: string}>({
@@ -121,7 +121,7 @@ const Reservation = (props: props) => {
                                     {
                                         submitting ? <CircularProgress color="inherit" size={20} />
                                         : 
-                                        <>Reserver</>
+                                        <>Reserver pour {calcPrice(props.vehicle.pricePerDay, startDate, endDate)} €</>
                                     }
                                 </Button>
                             </Grid>

@@ -1,6 +1,7 @@
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { Ireservation, Ivehicle } from "../Interfaces/Vehicle";
 
+// Convertir une Date String en date
 const convertDateStringToDate = (dateString: string): Date => {
     var dateParts = dateString.replaceAll("-", "/").split("/");
     let d = dateParts;
@@ -8,6 +9,7 @@ const convertDateStringToDate = (dateString: string): Date => {
     return dat;
 }
 
+// Savoir si une date est déjà réservée
 const isInReservations = (reservations: Ireservation[], date: string) => {
     for (let i = 0; i < reservations.length; i++) {
         const reservation : Ireservation = reservations[i];
@@ -18,6 +20,7 @@ const isInReservations = (reservations: Ireservation[], date: string) => {
     return false;
 }
 
+// Savoir si une date est entre deux autres dates
 const isBetweenTwoDate = (date: string, dateOne: string, dateTwo: string) => {
     let ndate = dayjs((convertDateStringToDate(date)));
     let ndateOne = dayjs((convertDateStringToDate(dateOne)));
@@ -28,4 +31,26 @@ const isBetweenTwoDate = (date: string, dateOne: string, dateTwo: string) => {
     return false;
 }
 
-export {convertDateStringToDate, isInReservations, isBetweenTwoDate};
+// Calculer le prix total en fonction de la date de début et de fin
+const calcPrice = (pricePerDay: number, startDate: Dayjs | undefined, endDate: Dayjs | undefined) => {
+    if (startDate === undefined || endDate === undefined) {
+        return pricePerDay;
+    }
+    let days = endDate.diff(startDate, 'day');
+
+    days += 1;
+    return days * pricePerDay;
+}
+
+// Calculer le nombre de jours entre deux dates
+const calcDays = (startDate: Dayjs | undefined, endDate: Dayjs | undefined) => {
+    if (startDate === undefined || endDate === undefined) {
+        return 0;
+    }
+    let days = endDate.diff(startDate, 'day');
+
+    days += 1;
+    return days;
+}
+
+export {convertDateStringToDate, isInReservations, isBetweenTwoDate, calcPrice, calcDays};
