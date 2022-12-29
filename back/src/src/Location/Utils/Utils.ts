@@ -37,11 +37,12 @@ export const createRes = (code: number, message: string, res: Response) => {
     });
 }
 
+// Retourne le nombre de jours entre deux dates
 const dayDiff = (date1: Date, date2: Date) => {
     const d1 = changeDateFormat(date1).getTime() / 86400000;
     const d2 = changeDateFormat(date2).getTime() / 86400000;
 
-    return (d2 - d1);
+    return Math.round(d2 - d1);
 }
 
 // Calculer le prix total en fonction de la date de début et de fin
@@ -49,7 +50,7 @@ export const calcPrice = (pricePerDay: number, startDate: Date | undefined, endD
     if (startDate === undefined || endDate === undefined) {
         return pricePerDay;
     }
-    let days = Math.floor(dayDiff(startDate, endDate));
+    let days = dayDiff(startDate, endDate);
 
     days += 1;
     return days * pricePerDay;
