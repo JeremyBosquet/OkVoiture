@@ -136,7 +136,7 @@ const NewLocationForm = () => {
     // Fonction pour modifier la valeur du prix par jour pour le preview
     const handlePriceChange = (e: any) => {
         const price = e.target.value;
-        if (price.length > 4)
+        if (price.length > 7)
         {
             e.cancelEvent = true;
             return ;

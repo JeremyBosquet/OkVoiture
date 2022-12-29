@@ -132,7 +132,7 @@ const LocationPreview = (props: props) => {
                         </Grid>
                         <StyledGridReservation item>
                             <Typography variant="subtitle1" component="div" sx={{textAlign: "right", display: "flex", flexDirection: "column", justifyContent: "center"}}>
-                                {props.vehicle.pricePerDay ? props.vehicle.pricePerDay + "€/jour" : <Skeleton variant="text" width="110px" />}
+                                {props.vehicle.pricePerDay ? props.vehicle.pricePerDay + "XPF/jour" : <Skeleton variant="text" width="110px" />}
                             </Typography>
                             <Typography sx={{ cursor: 'pointer' }} variant="body2">
                                 <Button variant="contained" color="primary" sx={{width: "100%"}} disabled>

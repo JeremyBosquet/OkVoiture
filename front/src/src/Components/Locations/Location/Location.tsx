@@ -138,7 +138,7 @@ const Location = (props: props) => {
                         </Grid>
                         <StyledGridReservation item>
                             <Typography variant="subtitle1" component="div" sx={{textAlign: "right", display: "flex", flexDirection: "column", justifyContent: "center"}}>
-                                {props.vehicle.pricePerDay}€/jour
+                                {props.vehicle.pricePerDay}XPF/jour
                             </Typography>
                             <Typography sx={{ cursor: 'pointer' }} variant="body2">
                                 <Button variant="contained" color="primary" sx={{width: "100%"}} onClick={handleClickOpenReservation}>

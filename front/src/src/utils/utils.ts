@@ -39,7 +39,7 @@ const calcPrice = (pricePerDay: number, startDate: Dayjs | undefined, endDate: D
     let days = endDate.diff(startDate, 'day');
 
     days += 1;
-    return days * pricePerDay;
+    return Math.abs(days * pricePerDay);
 }
 
 // Calculer le nombre de jours entre deux dates

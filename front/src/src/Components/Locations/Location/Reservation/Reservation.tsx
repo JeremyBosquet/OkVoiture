@@ -121,7 +121,7 @@ const Reservation = (props: props) => {
                                     {
                                         submitting ? <CircularProgress color="inherit" size={20} />
                                         : 
-                                        <>Reserver pour {calcPrice(props.vehicle.pricePerDay, startDate, endDate)} €</>
+                                        <>Reserver pour {calcPrice(props.vehicle.pricePerDay, startDate, endDate)}XPF</>
                                     }
                                 </Button>
                             </Grid>

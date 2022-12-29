@@ -57,6 +57,9 @@ export class Reservation {
     
     @IsNotEmpty()
     email: string;
+
+    @Expose()
+    totalPrice: number;
     
     @Expose()
     createdAt: Date;
@@ -84,4 +87,3 @@ export class reserveLocationDTO {
     @IsNotEmpty()
     endDate: Date;
 }
-

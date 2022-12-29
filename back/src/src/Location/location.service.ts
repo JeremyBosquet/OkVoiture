@@ -9,7 +9,7 @@ import { newLocationDTO, Reservation, reserveLocationDTO } from "./DTO/Location"
 import DatabaseImage from "./Entities/DatabaseImage";
 import Location from "./Entities/Location";
 import RenterService from "./renter.service";
-import { capitalizeFirstLetter, changeDateFormat, checkEmail, convertDateStringToDate, createRes } from "./Utils/Utils";
+import { calcPrice, capitalizeFirstLetter, changeDateFormat, checkEmail, convertDateStringToDate, createRes } from "./Utils/Utils";
 
 @Injectable()
 export class LocationService {
@@ -147,6 +147,7 @@ export class LocationService {
             startDate: body.startDate,
             endDate: body.endDate,
             email: body.email.toLowerCase(),
+            totalPrice: calcPrice(location.pricePerDay, body.startDate, body.endDate),
             createdAt: new Date()
         }
 
@@ -215,9 +216,9 @@ export class LocationService {
             return false;
         }
 
-        if (body.pricePerDay > 9999) {
+        if (body.pricePerDay > 2000000) {
             res.status(HttpStatus.BAD_REQUEST).send({
-                message: "Le prix par jour est trop élevé (max: 9999)",
+                message: "Le prix par jour est trop élevé (max: 2000000)",
                 code: HttpStatus.BAD_REQUEST
             });
             return false;
