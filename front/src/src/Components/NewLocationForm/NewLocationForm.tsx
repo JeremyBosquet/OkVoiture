@@ -145,7 +145,7 @@ const NewLocationForm = () => {
     }
     
     return (
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="fr">
             <Typography variant="h5" sx={{marginTop: "20px", marginBottom: "15px"}}>Proposer mon vehicule</Typography>
             <Grid container display="flex" justifyContent="space-around">
                 {

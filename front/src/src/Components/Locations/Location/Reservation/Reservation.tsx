@@ -70,7 +70,7 @@ const Reservation = (props: props) => {
     };
 
     return (
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="fr">
             <Grid container display="flex" justifyContent="space-around">
                 <Grid item xs={11} display="flex" justifyContent="center">
                     <form onSubmit={handleSubmit}>
