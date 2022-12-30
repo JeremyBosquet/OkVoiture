@@ -10,6 +10,9 @@ import Renter from './Location/Entities/Renter';
 import DatabaseImage from './Location/Entities/DatabaseImage';
 import RenterService from './Location/renter.service';
 import { HttpModule, HttpService } from '@nestjs/axios';
+import { AdminService } from './Auth/admin.service';
+import { AuthModule } from './Auth/auth.module';
+import User from './Auth/Entities/User';
 
 @Module({
   imports: [    
@@ -23,16 +26,17 @@ import { HttpModule, HttpService } from '@nestjs/axios';
         username: configService.get('DB_USER'),
         password: configService.get('DB_PASS'),
         database: configService.get('DB_NAME'),
-        entities: [Location, DatabaseImage, Renter],
+        entities: [Location, DatabaseImage, Renter, User],
         synchronize: true,
       }),
       inject: [ConfigService],
     }),
-    TypeOrmModule.forFeature([Location, DatabaseImage, Renter]),
+    TypeOrmModule.forFeature([Location, DatabaseImage, Renter, User]),
     LocationModule,
+    AuthModule,
     HttpModule
   ],
   controllers: [],
-  providers: [LocationService, DatabaseImageService, RenterService],
+  providers: [LocationService, DatabaseImageService, RenterService, AdminService],
 })
 export class AppModule {}

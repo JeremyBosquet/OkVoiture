@@ -9,7 +9,7 @@ import { newLocationDTO, Reservation, reserveLocationDTO } from "./DTO/Location"
 import DatabaseImage from "./Entities/DatabaseImage";
 import Location from "./Entities/Location";
 import RenterService from "./renter.service";
-import { calcPrice, capitalizeFirstLetter, changeDateFormat, checkEmail, convertDateStringToDate, createRes } from "./Utils/Utils";
+import { calcPrice, capitalizeFirstLetter, changeDateFormat, checkEmail, convertDateStringToDate, createRes } from "../Utils/Utils";
 
 @Injectable()
 export class LocationService {

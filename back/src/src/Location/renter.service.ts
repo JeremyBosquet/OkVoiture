@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { INewRenter } from './DTO/Location';
 import Renter from './Entities/Renter';
-import { capitalizeFirstLetter } from './Utils/Utils';
+import { capitalizeFirstLetter } from '../Utils/Utils';
  
 @Injectable()
 export class RenterService {
