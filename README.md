@@ -42,6 +42,10 @@
     # Actuellement: nom du docker de la base de donneées
     DB_HOST=postgres
 
+    # METTRE UNE CLE SECRETE DE VOTRE CHOIX (ex: UpuosDFrT5LhaXBEDmjLih6GLsLGFeLw)
+    # Permet de crypter les tokens JWT
+    JWT_SECRET=SECRET_DE_VOTRE_CHOIX
+
 ### Demarrage
 
 Un makefile est fourni afin de créer les fichiers/dossiers necessaires au fonctionnement de l'application.

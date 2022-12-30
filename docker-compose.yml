@@ -23,6 +23,7 @@ services:
        - ARG_DB_NAME=${POSTGRES_DB_NAME}
        - ARG_DB_USER=${POSTGRES_USER}
        - ARG_DB_PASS=${POSTGRES_PASSWORD}
+       - ARG_JWT_SECRET=${JWT_SECRET}
     ports:
       - 7000:7000
     networks:
