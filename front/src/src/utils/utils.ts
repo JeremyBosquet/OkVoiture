@@ -9,6 +9,11 @@ const convertDateStringToDate = (dateString: string): Date => {
     return dat;
 }
 
+// Formater la date en DD-MM-YYYY
+const formatDate = (date: Date) : string => {
+    return dayjs(date).format("DD-MM-YYYY");
+}
+
 // Savoir si une date est déjà réservée
 const isInReservations = (reservations: Ireservation[], date: string) => {
     for (let i = 0; i < reservations.length; i++) {
@@ -53,4 +58,4 @@ const calcDays = (startDate: Dayjs | undefined, endDate: Dayjs | undefined) => {
     return days;
 }
 
-export {convertDateStringToDate, isInReservations, isBetweenTwoDate, calcPrice, calcDays};
+export {convertDateStringToDate, formatDate, isInReservations, isBetweenTwoDate, calcPrice, calcDays};

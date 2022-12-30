@@ -29,7 +29,7 @@ export class AdminService {
 
 	async register(email: string, password: string) {
 		const user = new User();
-		user.email = email;
+		user.email = email.toLowerCase();
 		user.password = await this.hashPassword(password);
 		user.role = 'admin';
 

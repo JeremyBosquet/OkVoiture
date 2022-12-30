@@ -10,6 +10,8 @@ import DatabaseImage from "./Entities/DatabaseImage";
 import Location from "./Entities/Location";
 import RenterService from "./renter.service";
 import { calcPrice, capitalizeFirstLetter, changeDateFormat, checkEmail, convertDateStringToDate, createRes } from "../Utils/Utils";
+import Renter from "./Entities/Renter";
+import { RenterData } from "./DTO/Renter";
 
 @Injectable()
 export class LocationService {
@@ -18,6 +20,8 @@ export class LocationService {
         private locationRepository: Repository<Location>,
         private readonly renterService: RenterService,
         private readonly databaseFilesService: DatabaseImageService,
+        @InjectRepository(Renter)
+        private readonly rentersRepository: Repository<Renter>,
         private readonly httpService: HttpService
     ) {}
 
@@ -116,6 +120,49 @@ export class LocationService {
             }
 
             return (plainToInstance(Location, locations, { excludeExtraneousValues: true }));
+        } catch (error) {
+            return [];
+        }
+    }
+
+    // Recuperation des donnees de locations d'un loueur (locations, nb_reservations)
+    async getLocationsAndReservationsFromRenter(email: string): Promise<{locations: Location[], nb_reservations: number}> {
+        try {
+            const locations = await this.locationRepository.find({where: {email: email}});
+            let nb_reservations = 0;
+            for (let i = 0; i < locations.length; i++) {
+                nb_reservations += locations[i].reservations.length;
+            }
+            const LocationsAndReservations = {
+                locations: locations,
+                nb_reservations: nb_reservations
+            }
+            return (LocationsAndReservations);
+        } catch (error) {
+            return {
+                locations: [], 
+                nb_reservations: 0
+            };
+        }
+    }
+
+    // Recuperation des donnees de tous les loueurs (loueur, locations, nb_reservations)
+    async getDataFromAllRenters(): Promise<RenterData[]> {
+        try {
+            const renters = await this.rentersRepository.find();
+            let rentersData : RenterData[]  = [];
+
+            for (let i = 0; i < renters.length; i++) {
+                const locationsAndReservations = await this.getLocationsAndReservationsFromRenter(renters[i].email);
+                const renterData : RenterData = {
+                    renter: renters[i],
+                    locations: locationsAndReservations.locations,
+                    nb_reservations: locationsAndReservations.nb_reservations
+                }
+                rentersData.push(renterData);
+            }
+
+            return (rentersData);
         } catch (error) {
             return [];
         }

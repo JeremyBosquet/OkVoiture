@@ -1,22 +1,24 @@
-import { UseInterceptors, UploadedFile, BadRequestException, UnsupportedMediaTypeException, ParseFilePipeBuilder, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator, ConsoleLogger } from '@nestjs/common';
+import { UseInterceptors, UploadedFile, BadRequestException, UnsupportedMediaTypeException, ParseFilePipeBuilder, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator, ConsoleLogger, UseGuards, Request, Response } from '@nestjs/common';
 import { Body, Controller, HttpStatus, Post, Get, Param, Res, ValidationPipe } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { Response } from 'express';
+import { JwtAuthGuard } from 'src/Auth/Guards/jwt-auth.guard';
 import { Readable } from 'stream';
 import { idDto, newLocationDTO, pageDto, reserveLocationDTO } from './DTO/Location';
 import { LocationService } from './location.service';
+import { AdminService } from 'src/Auth/admin.service';
 
 @Controller('api/v1/location')
 export class LocationController {
 
     constructor(
-        private readonly locationService: LocationService
+        private readonly locationService: LocationService,
+        private readonly adminService: AdminService,
     ) {}
     
     // Creer une nouvelle location
     @Post("")
     @UseInterceptors(FileInterceptor('image'))
-    async createNewLocation(@UploadedFile() image: Express.Multer.File, @Body(ValidationPipe) body: newLocationDTO, @Res() res: Response): Promise<void> {
+    async createNewLocation(@UploadedFile() image: Express.Multer.File, @Body(ValidationPipe) body: newLocationDTO, @Res() res): Promise<void> {
 
         // Verification des données recues et envoie de messages d'erreurs si besoin
         if (!(await this.locationService.verifyLocationData(body, image, res)))
@@ -43,7 +45,7 @@ export class LocationController {
 
     // Recuperer toutes les locations
     @Get("/all")
-    async getAllLocations(@Res() res: Response): Promise<void> {
+    async getAllLocations(@Res() res): Promise<void> {
         const locations = await this.locationService.getAllLocations();
         
         res.status(HttpStatus.OK).json(locations);
@@ -51,15 +53,34 @@ export class LocationController {
     
     // Recuperer les locations par prix croissant
     @Get("/sortedByAscPrice")
-    async getLocationBySortedLowestPrice(@Res() res: Response): Promise<void> {
+    async getLocationBySortedLowestPrice(@Res() res): Promise<void> {
         const locations = await this.locationService.getLocationSortedByLowestPrice();
 
         res.status(HttpStatus.OK).json(locations);
     }
 
+    // Recuperation de toutes les donnees de tous les loueurs (loueur, locations, nb_reservations)
+    @UseGuards(JwtAuthGuard)
+    @Get("/locationsAndReservations")
+    async getLocationsAndReservations(@Request() req, @Res() res) {
+        const user = await this.adminService.findOneByEmail(req.user.email);
+        if (!user || user.role !== "admin") {
+            res.status(HttpStatus.UNAUTHORIZED).send({
+                code: HttpStatus.UNAUTHORIZED,
+                message: "Vous n'avez pas les autorisations"
+            })
+        }
+
+        const data = await this.locationService.getDataFromAllRenters();
+        res.status(HttpStatus.OK).send({
+            code: HttpStatus.OK,
+            data: data
+        });
+    }
+
     // Recuperer la location par id
     @Get("/:id")
-    async getLocationById(@Param(ValidationPipe) param: idDto, @Res() res: Response): Promise<void> {
+    async getLocationById(@Param(ValidationPipe) param: idDto, @Res() res): Promise<void> {
         const location = await this.locationService.getLocationById(param.id);
 
         res.status(HttpStatus.OK).json(location);
@@ -67,7 +88,7 @@ export class LocationController {
 
     // Recuperer l'image d'une location par son id
     @Get("image/:id")
-    async getImageLocation(@Param(ValidationPipe) param: idDto, @Res() res: Response): Promise<void> {
+    async getImageLocation(@Param(ValidationPipe) param: idDto, @Res() res): Promise<void> {
         // Recupere l'image de la base de donnée
         const image = await this.locationService.getImageLocationById(param.id);
  
@@ -83,7 +104,7 @@ export class LocationController {
     }
 
     @Post("/reservation")
-    async reservationLocation(@Body(ValidationPipe) body: reserveLocationDTO, @Res() res: Response): Promise<void> {
+    async reservationLocation(@Body(ValidationPipe) body: reserveLocationDTO, @Res() res): Promise<void> {
         // Verification des données recues et envoie de messages d'erreurs si besoin
         if (!(await this.locationService.verifyReservationData(body, res)))
             return ;
