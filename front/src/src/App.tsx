@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LocationsPage from './Pages/LocationsPage/LocationsPage';
 import NewLocationPage from './Pages/NewLocationPage/NewLocationPage';
 import { frFR } from '@mui/material/locale';
+import AdminAuthPage from './Pages/AdminAuthPage/AdminAuthPage';
+import AdminDashboard from './Pages/AdminDashboard/AdminDashboard';
 import('dayjs/locale/fr');
 
 function App() {
@@ -31,6 +33,9 @@ function App() {
         <Routes>
           <Route path="/" element={<LocationsPage />} />
           <Route path="/louer/un/vehicule" element={<NewLocationPage />} />
+          <Route path="/admin" element={<AdminAuthPage />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="*" element={<Typography variant="h1">404</Typography>} />
         </Routes>
       </Router>
     </ThemeProvider>

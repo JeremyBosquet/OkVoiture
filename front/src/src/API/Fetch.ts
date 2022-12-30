@@ -1,4 +1,5 @@
 import { useFetch, useSingleQuery } from '@hazae41/xswr';
+import axios from 'axios';
 import { Icommunes } from '../Interfaces/Fetch';
 import { Ivehicle } from '../Interfaces/Vehicle';
  
@@ -22,4 +23,22 @@ export function getVehicles(page : number) {
   useFetch(query) // Fetch on mount and on url change
  
   return query
+}
+
+export function getExistAdmin() {
+  const query = useSingleQuery<boolean>(`${import.meta.env.VITE_URL_API}/api/v1/auth/admin/exist`, fetchAsJson)
+  
+  useFetch(query) // Fetch on mount and on url change
+ 
+  return query
+}
+
+export async function fetchApi(url: string) {
+  const query = await axios.get(`${import.meta.env.VITE_URL_API}` + url, {
+    headers: {
+      authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+  })
+ 
+  return query;
 }
