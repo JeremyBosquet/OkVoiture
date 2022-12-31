@@ -31,9 +31,7 @@ const LoginForm = () => {
             console.log(res)
             localStorage.setItem('token', res.data.data.access_token);
             setResult({error: "", success: res.data.message});
-            setInterval(() => {
-                navigate('/admin/dashboard');
-            }, 2000);
+            navigate('/admin/dashboard');
         })
         .catch(() => {
             setResult({error: "Une erreur est survenue..", success: ""});
