@@ -11,15 +11,27 @@ const LocationsPage = () => {
 
     if (error)
         return (
-            <Grid container display="flex" alignItems="center" justifyContent="center" direction="column">
-                <Typography>Une erreur est survenue.</Typography>
-            </Grid>
+            <>
+                <NavBar />
+                <TopHome />
+                <Grid container xs={12} display="flex" alignItems="center" justifyContent="center" direction="column" mt={5}>
+                    <Typography variant="h4">Nos locations</Typography>
+                    <Typography mx={3} textAlign="center" variant="h6" >Choisissez votre véhicule parmi nos nombreuses locations.</Typography>
+                    <Typography>Une erreur est survenue..</Typography>
+                </Grid>
+            </>
         ) 
     if (!data)
         return (
-            <Grid container display="flex" alignItems="center" justifyContent="center" direction="column">
-                <Typography>Chargement...</Typography>
-            </Grid>
+            <>
+                <NavBar />
+                <TopHome />
+                <Grid container xs={12} display="flex" alignItems="center" justifyContent="center" direction="column" mt={5}>
+                    <Typography variant="h4">Nos locations</Typography>
+                    <Typography mx={3} textAlign="center" variant="h6" >Choisissez votre véhicule parmi nos nombreuses locations.</Typography>
+                    <Typography>Chargement en cours..</Typography>
+                </Grid>
+            </>
         )
 
     return (
