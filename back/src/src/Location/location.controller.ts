@@ -1,9 +1,9 @@
-import { UseInterceptors, UploadedFile, BadRequestException, UnsupportedMediaTypeException, ParseFilePipeBuilder, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator, ConsoleLogger, UseGuards, Request, Response } from '@nestjs/common';
+import { UseInterceptors, UploadedFile, BadRequestException, UnsupportedMediaTypeException, ParseFilePipeBuilder, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator, ConsoleLogger, UseGuards, Request, Response, Delete } from '@nestjs/common';
 import { Body, Controller, HttpStatus, Post, Get, Param, Res, ValidationPipe } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { JwtAuthGuard } from 'src/Auth/Guards/jwt-auth.guard';
 import { Readable } from 'stream';
-import { idDto, newLocationDTO, pageDto, reserveLocationDTO } from './DTO/Location';
+import { deleteReservationDto, idDto, newLocationDTO, pageDto, reserveLocationDTO } from './DTO/Location';
 import { LocationService } from './location.service';
 import { AdminService } from 'src/Auth/admin.service';
 
@@ -123,6 +123,34 @@ export class LocationController {
 
         res.status(HttpStatus.OK).json({
             message: "Votre réservation a bien été prise en compte", 
+            code: HttpStatus.OK
+        });
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Delete("/reservation")
+    async deleteReservation(@Request() req, @Body(ValidationPipe) body: deleteReservationDto, @Res() res): Promise<void> {
+        const user = await this.adminService.findOneByEmail(req.user.email);
+        if (!user || user.role !== "admin") {
+            res.status(HttpStatus.UNAUTHORIZED).send({
+                code: HttpStatus.UNAUTHORIZED,
+                message: "Vous n'avez pas les autorisations"
+            })
+        }
+
+        try {
+            await this.locationService.deleteReservation(body.locationId, body.startDate);
+        }
+        catch (e) {
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
+                message: "Une erreur est survenue, veuillez réessayer plus tard",
+                code: HttpStatus.INTERNAL_SERVER_ERROR
+            });
+            return ;
+        }
+
+        res.status(HttpStatus.OK).json({
+            message: "La reservation a bien été supprimée", 
             code: HttpStatus.OK
         });
     }

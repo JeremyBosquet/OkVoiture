@@ -1,10 +1,11 @@
 
-import { Button, Typography } from '@mui/material';
+import { Button, Grid, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchApi } from '../../API/Fetch';
 import Infos from '../../Components/Admin/Infos/Infos';
 import LocationsTable from '../../Components/Admin/LocationsTable/LocationsTable';
+import Navbar from '../../Components/NavBar/NavBar';
 import { IAdmin } from '../../Interfaces/Admin';
 
 const AdminDashboard = () => {
@@ -37,8 +38,24 @@ const AdminDashboard = () => {
 
 	return (
 		<>
-			<Typography variant="h3">Dashboard</Typography>
-			<Button variant="contained" onClick={() => {handleLogout()}}>Logout</Button>
+			<Grid container p={2} sx={{
+				p: 2,
+				justifyContent: "space-between",
+				alignItems: "center",
+				"@media (max-width: 670px)": {
+					// backgroundColor: "primary.main",
+					display: "flex",
+					justifyContent: "center",
+					p: 1,
+					// alignItems: "center",
+				}
+			}}>
+				<Typography variant="h4">Administration</Typography>
+				<Grid item>
+					<Button sx={{mr: 1}} variant="contained" color="inherit" onClick={() => {navigate('/')}}>Retour au site</Button>
+					<Button variant="contained" color="error" onClick={() => {handleLogout()}}>Deconnexion</Button>
+				</Grid>
+			</Grid>
 			{
 				user && data ?
 					<>

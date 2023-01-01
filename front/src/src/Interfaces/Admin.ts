@@ -21,10 +21,12 @@ export interface ILocation {
 }
 
 export interface Ireservation {
+    firstName: string;
     email: string;
-    startDate: string;
-    endDate: string;
+    startDate: Date;
+    endDate: Date;
     totalPrice: number;
+    createdAt: Date;
 }
 
 export interface IRenter {
@@ -38,4 +40,12 @@ export interface RenterData {
     renter: IRenter,
     locations: ILocation[],
     nb_reservations: number
+}
+
+export interface rowData {
+    email: string;
+    firstName: string;
+    nb_locations: number;
+    nb_reservations: number;
+    locations: ILocation[];
 }

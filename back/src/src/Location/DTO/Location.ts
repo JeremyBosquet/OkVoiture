@@ -87,3 +87,13 @@ export class reserveLocationDTO {
     @IsNotEmpty()
     endDate: Date;
 }
+
+
+export class deleteReservationDto {
+    @IsNotEmpty()
+    @IsUUID()
+    locationId: string;
+
+    @IsNotEmpty()
+    startDate: Date;
+}

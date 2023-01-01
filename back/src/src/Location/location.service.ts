@@ -202,6 +202,23 @@ export class LocationService {
         await this.locationRepository.save(location);
     }
 
+    async deleteReservation(locationId: string, startDate: Date): Promise<void> {
+        const location = await this.locationRepository.findOneBy({id: locationId});
+
+        if (location === undefined)
+            return;
+
+        const reservations = location.reservations;
+        for (let i = 0; i < reservations.length; i++) {
+            if (reservations[i].startDate === startDate) {
+                reservations.splice(i, 1);
+                break;
+            }
+        }
+
+        await this.locationRepository.save(location);
+    }
+
     // Retourne true si les données sont valides, false sinon
     async verifyLocationData(body: newLocationDTO, image: Express.Multer.File, res: Response): Promise<boolean> {
         const startDate = changeDateFormat(body.startDate);
