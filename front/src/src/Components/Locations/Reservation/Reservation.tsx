@@ -3,9 +3,9 @@ import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
 import React, { useState } from 'react'
-import { postData } from '../../../../API/Post';
-import { Ivehicle } from '../../../../Interfaces/Vehicle';
-import { calcPrice, convertDateStringToDate, isInReservations } from '../../../../utils/utils'
+import { postData } from '../../../API/Post';
+import { Ivehicle } from '../../../Interfaces/Vehicle';
+import { calcPrice, convertDateStringToDate, isInReservations } from '../../../utils/utils'
 
 interface props {
     vehicle: Ivehicle;
@@ -14,11 +14,11 @@ interface props {
 const Reservation = (props: props) => {
     const dateStartDefault = (dayjs(new Date(convertDateStringToDate(props.vehicle.startDate))));
     const dateEndDefault = (dayjs(new Date(convertDateStringToDate(props.vehicle.endDate))));
-    const [startDate, setStartDate] = useState<Dayjs | undefined>(dateStartDefault);
-    const [endDate, setEndDate] = useState<Dayjs | undefined>(dateStartDefault);
+    const [startDate, setStartDate] = useState<Dayjs | undefined>();
+    const [endDate, setEndDate] = useState<Dayjs | undefined>();
     const [submitting, setSubmitting] = useState<boolean>(false);
 
-    const [result, setResult] = useState<{error: string, success: string}>({
+    const [result, setResult] = useState<{ error: string, success: string }>({
         error: "",
         success: ""
     });
@@ -38,7 +38,7 @@ const Reservation = (props: props) => {
         // Verification de la syntax de l'email
         if (!email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,10}$/)) {
             setResult({ ...result, error: "Veuillez entrer un email valide" });
-            return ;
+            return;
         }
 
         const newReservation = {
@@ -52,7 +52,7 @@ const Reservation = (props: props) => {
         // Envoi des données au serveur via l'API
         setSubmitting(true);
         await postData('/api/v1/location/reservation', newReservation).then((data: any) => {
-            setResult({ error: "", success: data.data?.message});
+            setResult({ error: "", success: data.data?.message });
         }).catch((err) => {
             setResult({ success: "", error: err.response.data?.message });
         });
@@ -79,10 +79,10 @@ const Reservation = (props: props) => {
                                 <Typography variant="h5" component="h2" align="center">Reservation de {props.vehicle.carBrand} {props.vehicle.carModel}</Typography>
                             </Grid>
                             <Grid item xs={12}>
-                                <TextField name="firstName" id="firstName" label="Prénom" type="text" variant="outlined"  fullWidth required/>
+                                <TextField name="firstName" id="firstName" label="Prénom" type="text" variant="outlined" fullWidth required />
                             </Grid>
                             <Grid item xs={12}>
-                                <TextField name="email" id="email" label="Email" type="email" variant="outlined" fullWidth required/>
+                                <TextField name="email" id="email" label="Email" type="email" variant="outlined" fullWidth required />
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <DesktopDatePicker
@@ -97,8 +97,8 @@ const Reservation = (props: props) => {
                                     maxDate={dateEndDefault}
                                     value={startDate}
                                     onChange={handleChangeStart}
-                                    renderInput={(params: any) => <TextField {...params} fullWidth required/>}
-                                    />
+                                    renderInput={(params: any) => <TextField {...params} fullWidth required />}
+                                />
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <DesktopDatePicker
@@ -113,21 +113,21 @@ const Reservation = (props: props) => {
                                     maxDate={dateEndDefault}
                                     value={endDate}
                                     onChange={handleChangeEnd}
-                                    renderInput={(params: any) => <TextField {...params} fullWidth required/>}
+                                    renderInput={(params: any) => <TextField {...params} fullWidth required />}
                                 />
                             </Grid>
                             <Grid item xs={12}>
                                 <Button type="submit" variant="contained" fullWidth>
                                     {
                                         submitting ? <CircularProgress color="inherit" size={20} />
-                                        : 
-                                        <>Reserver pour {calcPrice(props.vehicle.pricePerDay, startDate, endDate)}XPF</>
+                                            :
+                                            <>Reserver pour {calcPrice(props.vehicle.pricePerDay, startDate, endDate)}XPF</>
                                     }
                                 </Button>
                             </Grid>
                             <Grid item xs={12}>
-                                { result.error && <Alert severity="error" >{result.error}</Alert> }
-                                { result.success && <Alert severity="success">{result.success}</Alert> }
+                                {result.error && <Alert severity="error" >{result.error}</Alert>}
+                                {result.success && <Alert severity="success">{result.success}</Alert>}
                             </Grid>
                         </Grid>
                     </form>
