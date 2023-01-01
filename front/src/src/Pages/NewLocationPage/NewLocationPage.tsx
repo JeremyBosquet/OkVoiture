@@ -1,4 +1,3 @@
-import react from 'react';
 import { Grid } from '@mui/material';
 import NewLocationForm from '../../Components/NewLocationForm/NewLocationForm';
 import NavBar from '../../Components/NavBar/NavBar';

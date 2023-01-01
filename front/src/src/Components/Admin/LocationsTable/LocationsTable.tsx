@@ -12,7 +12,7 @@ const LocationsTable = (props: props) => {
     const [rows, setRows] = useState<rowData[] | undefined>(undefined);
 
     const initRows = () => {
-        let newRows: rowData[] = [];
+        const newRows: rowData[] = [];
         for (let i = 0; i < props.data.length; i++) {
             newRows.push(createData(props.data[i].renter.email, props.data[i].renter.firstName, props.data[i].locations.length, props.data[i].nb_reservations, props.data[i].locations));
         }

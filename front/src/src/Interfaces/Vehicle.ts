@@ -14,3 +14,12 @@ export interface Ireservation {
     startDate: string,
     endDate: string
 }
+
+export interface newVehicleForm {
+    carBrand: string, 
+    carModel: string, 
+    carYear: string, 
+    town: string | null, 
+    pricePerDay: string, 
+    image: File
+}

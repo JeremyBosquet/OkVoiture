@@ -17,7 +17,7 @@ export function getTownFromPolynesia() {
   return query
 }
 
-export function getVehicles(page : number) {
+export function getVehicles() {
   const query = useSingleQuery<Ivehicle[]>(`${import.meta.env.VITE_URL_API}/api/v1/location/sortedByAscPrice`, fetchAsJson)
   
   useFetch(query) // Fetch on mount and on url change

@@ -1,13 +1,11 @@
-import react from 'react';
 import { Grid, Typography } from '@mui/material';
 import { getVehicles } from '../../API/Fetch';
-import { Ivehicle } from '../../Interfaces/Vehicle';
 import LocationsList from '../../Components/Locations/LocationsList/LocationsList';
 import NavBar from '../../Components/NavBar/NavBar';
 import TopHome from '../../Components/TopHome/TopHome';
 
 const LocationsPage = () => {
-    const { data, error } = getVehicles(0); 
+    const { data, error } = getVehicles(); 
 
     if (error)
         return (

@@ -14,8 +14,8 @@ interface props {
 const Reservation = (props: props) => {
     const dateStartDefault = (dayjs(new Date(convertDateStringToDate(props.vehicle.startDate))));
     const dateEndDefault = (dayjs(new Date(convertDateStringToDate(props.vehicle.endDate))));
-    const [startDate, setStartDate] = useState<Dayjs | undefined>();
-    const [endDate, setEndDate] = useState<Dayjs | undefined>();
+    const [startDate, setStartDate] = useState<Dayjs | undefined>(dayjs(new Date()));
+    const [endDate, setEndDate] = useState<Dayjs | undefined>(dayjs(new Date()));
     const [submitting, setSubmitting] = useState<boolean>(false);
 
     const [result, setResult] = useState<{ error: string, success: string }>({
@@ -23,12 +23,12 @@ const Reservation = (props: props) => {
         success: ""
     });
 
-    const handleSubmit = async (e: any) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setResult({ success: "", error: "" });
 
-        const firstName = e.target.firstName.value;
-        const email = e.target.email.value;
+        const firstName = e.currentTarget.firstName.value;
+        const email = e.currentTarget.email.value;
 
         if (!firstName || !email || !startDate || !endDate) {
             setResult({ ...result, error: "Veuillez remplir tous les champs" });
@@ -51,7 +51,7 @@ const Reservation = (props: props) => {
 
         // Envoi des données au serveur via l'API
         setSubmitting(true);
-        await postData('/api/v1/location/reservation', newReservation).then((data: any) => {
+        await postData('/api/v1/location/reservation', newReservation).then((data) => {
             setResult({ error: "", success: data.data?.message });
         }).catch((err) => {
             setResult({ success: "", error: err.response.data?.message });
@@ -60,12 +60,20 @@ const Reservation = (props: props) => {
     }
 
     // Fonction pour changer la date de début
-    const handleChangeStart = (newValue: any) => {
+    const handleChangeStart = (newValue: Dayjs | null) => {
+        if (newValue === null) {
+            setStartDate(undefined);
+            return;
+        }
         setStartDate(newValue);
     };
-
+    
     // Fonction pour changer la date de fin
-    const handleChangeEnd = (newValue: any) => {
+    const handleChangeEnd = (newValue: Dayjs | null) => {
+        if (newValue === null) {
+            setEndDate(undefined);
+            return;
+        }
         setEndDate(newValue);
     };
 

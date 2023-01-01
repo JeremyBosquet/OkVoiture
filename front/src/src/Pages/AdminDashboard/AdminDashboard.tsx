@@ -1,11 +1,9 @@
-
 import { Button, Grid, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchApi } from '../../API/Fetch';
 import Infos from '../../Components/Admin/Infos/Infos';
 import LocationsTable from '../../Components/Admin/LocationsTable/LocationsTable';
-import Navbar from '../../Components/NavBar/NavBar';
 import { IAdmin } from '../../Interfaces/Admin';
 
 const AdminDashboard = () => {

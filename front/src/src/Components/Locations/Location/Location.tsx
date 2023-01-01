@@ -76,10 +76,10 @@ const Location = (props: props) => {
                 maxWidth="lg"
             >
                 <DialogContent dividers>
-                    <img alt="Photo du vehicule" src={import.meta.env.VITE_URL_API + "/api/v1/location/image/" + props.vehicle.id} width="100%" />
+                    <img alt="Vehicule" src={import.meta.env.VITE_URL_API + "/api/v1/location/image/" + props.vehicle.id} width="100%" />
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus onClick={handleClose}>
+                    <Button onClick={handleClose}>
                         Fermer
                     </Button>
                 </DialogActions>
@@ -94,7 +94,7 @@ const Location = (props: props) => {
                     <Reservation vehicle={props.vehicle} />
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus onClick={handleCloseReservation}>
+                    <Button onClick={handleCloseReservation}>
                         Fermer
                     </Button>
                 </DialogActions>

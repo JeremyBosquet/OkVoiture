@@ -1,11 +1,6 @@
-import { ArrowDownward, ArrowUpward } from '@mui/icons-material';
-import { Alert, Button, Dialog, DialogActions, DialogContent, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
-import dayjs, { Dayjs } from 'dayjs';
-import React, { useState } from 'react'
-import { deleteApi } from '../../../API/Delete';
+import { Button, Dialog, DialogActions, DialogContent } from '@mui/material';
 import { ILocation, rowData } from '../../../Interfaces/Admin';
 import { createData } from '../../../Pages/AdminDashboard/createData';
-import { formatDate } from '../../../utils/utils';
 import Reservations from '../Reservations/Reservations';
 
 interface props {
@@ -35,7 +30,7 @@ const ReservationsDialog = (props: props) => {
                 />
             </DialogContent>
             <DialogActions>
-                <Button autoFocus onClick={() => props.handleClose()}>
+                <Button onClick={() => props.handleClose()}>
                     Fermer
                 </Button>
             </DialogActions>
