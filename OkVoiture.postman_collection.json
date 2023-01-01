@@ -7,668 +7,918 @@
 	},
 	"item": [
 		{
-			"name": "/api/v1/location",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
+			"name": "Location",
+			"item": [
+				{
+					"name": "/api/v1/location",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "firstName",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "carBrand",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "carModel",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "carYear",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "town",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "startDate",
+									"value": "DD-MM-YYYY",
+									"type": "text"
+								},
+								{
+									"key": "endDate",
+									"value": "DD-MM-YYYY",
+									"type": "text"
+								},
+								{
+									"key": "pricePerDay",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:7000/api/v1/location",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"api",
+								"v1",
+								"location"
+							]
+						},
+						"description": "Creation d'une nouvelle location"
+					},
+					"response": [
 						{
-							"key": "firstName",
-							"value": "Jeremy",
-							"type": "text"
+							"name": "Ok",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "firstName",
+											"value": "Jeremy",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "professionnel@bosquetjeremy.fr",
+											"type": "text"
+										},
+										{
+											"key": "carBrand",
+											"value": "Chevrolet",
+											"type": "text"
+										},
+										{
+											"key": "carModel",
+											"value": "Aveo",
+											"type": "text"
+										},
+										{
+											"key": "carYear",
+											"value": "2012",
+											"type": "text"
+										},
+										{
+											"key": "town",
+											"value": "Papeete",
+											"type": "text"
+										},
+										{
+											"key": "startDate",
+											"value": "25-12-2022",
+											"type": "text"
+										},
+										{
+											"key": "endDate",
+											"value": "26-12-2022",
+											"type": "text"
+										},
+										{
+											"key": "pricePerDay",
+											"value": "100",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": []
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:7000/api/v1/location",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7000",
+									"path": [
+										"api",
+										"v1",
+										"location"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
 						},
 						{
-							"key": "email",
-							"value": "professionnel@bosquetjeremy.fr",
-							"type": "text"
+							"name": "Email invalide",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "firstName",
+											"value": "Jeremy",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "professionnel@bosquetjeremy",
+											"type": "text"
+										},
+										{
+											"key": "carBrand",
+											"value": "Chevrolet",
+											"type": "text"
+										},
+										{
+											"key": "carModel",
+											"value": "Aveo",
+											"type": "text"
+										},
+										{
+											"key": "carYear",
+											"value": "2012",
+											"type": "text"
+										},
+										{
+											"key": "town",
+											"value": "Papeete",
+											"type": "text"
+										},
+										{
+											"key": "startDate",
+											"value": "25-12-2022",
+											"type": "text"
+										},
+										{
+											"key": "endDate",
+											"value": "26-12-2022",
+											"type": "text"
+										},
+										{
+											"key": "pricePerDay",
+											"value": "100",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": []
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:7000/api/v1/location",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7000",
+									"path": [
+										"api",
+										"v1",
+										"location"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
 						},
 						{
-							"key": "carBrand",
-							"value": "Chevrolet",
-							"type": "text"
+							"name": "Date invalide",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "firstName",
+											"value": "Jeremy",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "professionnel@bosquetjeremy.fr",
+											"type": "text"
+										},
+										{
+											"key": "carBrand",
+											"value": "Chevrolet",
+											"type": "text"
+										},
+										{
+											"key": "carModel",
+											"value": "Aveo",
+											"type": "text"
+										},
+										{
+											"key": "carYear",
+											"value": "2012",
+											"type": "text"
+										},
+										{
+											"key": "town",
+											"value": "Papeete",
+											"type": "text"
+										},
+										{
+											"key": "startDate",
+											"value": "27-12-2022",
+											"type": "text"
+										},
+										{
+											"key": "endDate",
+											"value": "26-12-2022",
+											"type": "text"
+										},
+										{
+											"key": "pricePerDay",
+											"value": "100",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": []
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:7000/api/v1/location",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7000",
+									"path": [
+										"api",
+										"v1",
+										"location"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
 						},
 						{
-							"key": "carModel",
-							"value": "Aveo",
-							"type": "text"
+							"name": "Ville invalide",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "firstName",
+											"value": "Jeremy",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "professionnel@bosquetjeremy.fr",
+											"type": "text"
+										},
+										{
+											"key": "carBrand",
+											"value": "Chevrolet",
+											"type": "text"
+										},
+										{
+											"key": "carModel",
+											"value": "Aveo",
+											"type": "text"
+										},
+										{
+											"key": "carYear",
+											"value": "2012",
+											"type": "text"
+										},
+										{
+											"key": "town",
+											"value": "Paris",
+											"type": "text"
+										},
+										{
+											"key": "startDate",
+											"value": "26-12-2022",
+											"type": "text"
+										},
+										{
+											"key": "endDate",
+											"value": "26-12-2022",
+											"type": "text"
+										},
+										{
+											"key": "pricePerDay",
+											"value": "100",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": []
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:7000/api/v1/location",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7000",
+									"path": [
+										"api",
+										"v1",
+										"location"
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": ""
 						},
 						{
-							"key": "carYear",
-							"value": "2022",
-							"type": "text"
+							"name": "Annee invalide",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "firstName",
+											"value": "Jeremy",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "professionnel@bosquetjeremy.fr",
+											"type": "text"
+										},
+										{
+											"key": "carBrand",
+											"value": "Chevrolet",
+											"type": "text"
+										},
+										{
+											"key": "carModel",
+											"value": "Aveo",
+											"type": "text"
+										},
+										{
+											"key": "carYear",
+											"value": "2030",
+											"type": "text"
+										},
+										{
+											"key": "town",
+											"value": "Papeete",
+											"type": "text"
+										},
+										{
+											"key": "startDate",
+											"value": "26-12-2022",
+											"type": "text"
+										},
+										{
+											"key": "endDate",
+											"value": "26-12-2022",
+											"type": "text"
+										},
+										{
+											"key": "pricePerDay",
+											"value": "100",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": []
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:7000/api/v1/location",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7000",
+									"path": [
+										"api",
+										"v1",
+										"location"
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": ""
 						},
 						{
-							"key": "town",
-							"value": "Papeete",
-							"type": "text"
-						},
-						{
-							"key": "startDate",
-							"value": "26-12-2022",
-							"type": "text"
-						},
-						{
-							"key": "endDate",
-							"value": "26-12-2022",
-							"type": "text"
-						},
-						{
-							"key": "pricePerDay",
-							"value": "10000",
-							"type": "text"
-						},
-						{
-							"key": "image",
-							"type": "file",
-							"src": "/C:/Users/Jeremy/Desktop/fsdjkfjmsdiklfjmdsoiljfdklsijmfdlskjfdklsfds.png"
+							"name": "Prix invalide",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "firstName",
+											"value": "Jeremy",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "professionnel@bosquetjeremy.fr",
+											"type": "text"
+										},
+										{
+											"key": "carBrand",
+											"value": "Chevrolet",
+											"type": "text"
+										},
+										{
+											"key": "carModel",
+											"value": "Aveo",
+											"type": "text"
+										},
+										{
+											"key": "carYear",
+											"value": "2012",
+											"type": "text"
+										},
+										{
+											"key": "town",
+											"value": "Papeete",
+											"type": "text"
+										},
+										{
+											"key": "startDate",
+											"value": "26-12-2022",
+											"type": "text"
+										},
+										{
+											"key": "endDate",
+											"value": "26-12-2022",
+											"type": "text"
+										},
+										{
+											"key": "pricePerDay",
+											"value": "-100",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": []
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:7000/api/v1/location",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7000",
+									"path": [
+										"api",
+										"v1",
+										"location"
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": ""
 						}
 					]
 				},
-				"url": {
-					"raw": "http://localhost:7000/api/v1/location",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7000",
-					"path": [
-						"api",
-						"v1",
-						"location"
-					]
-				}
-			},
-			"response": [
 				{
-					"name": "Ok",
-					"originalRequest": {
+					"name": "/api/v1/location/reservation",
+					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "formdata",
 							"formdata": [
 								{
+									"key": "locationId",
+									"value": "",
+									"type": "text"
+								},
+								{
 									"key": "firstName",
-									"value": "Jeremy",
+									"value": "",
 									"type": "text"
 								},
 								{
 									"key": "email",
-									"value": "professionnel@bosquetjeremy.fr",
-									"type": "text"
-								},
-								{
-									"key": "carBrand",
-									"value": "Chevrolet",
-									"type": "text"
-								},
-								{
-									"key": "carModel",
-									"value": "Aveo",
-									"type": "text"
-								},
-								{
-									"key": "carYear",
-									"value": "2012",
-									"type": "text"
-								},
-								{
-									"key": "town",
-									"value": "Papeete",
+									"value": "",
 									"type": "text"
 								},
 								{
 									"key": "startDate",
-									"value": "25-12-2022",
+									"value": "DD-MM-YYYY",
 									"type": "text"
 								},
 								{
 									"key": "endDate",
-									"value": "26-12-2022",
+									"value": "DD-MM-YYYY",
 									"type": "text"
-								},
-								{
-									"key": "pricePerDay",
-									"value": "100",
-									"type": "text"
-								},
-								{
-									"key": "image",
-									"type": "file",
-									"src": []
 								}
 							]
 						},
 						"url": {
-							"raw": "http://vps.bosquetjeremy.fr:7000/api/v1/location",
+							"raw": "http://localhost:7000/api/v1/location/reservation",
 							"protocol": "http",
 							"host": [
-								"vps",
-								"bosquetjeremy",
-								"fr"
+								"localhost"
 							],
 							"port": "7000",
 							"path": [
 								"api",
 								"v1",
-								"location"
+								"location",
+								"reservation"
 							]
-						}
+						},
+						"description": "Ajout d'une reservation a une location existante"
 					},
-					"_postman_previewlanguage": null,
-					"header": null,
-					"cookie": [],
-					"body": null
+					"response": []
 				},
 				{
-					"name": "Email invalide",
-					"originalRequest": {
-						"method": "POST",
+					"name": "/api/v1/location/:id",
+					"request": {
+						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "firstName",
-									"value": "Jeremy",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "professionnel@bosquetjeremy",
-									"type": "text"
-								},
-								{
-									"key": "carBrand",
-									"value": "Chevrolet",
-									"type": "text"
-								},
-								{
-									"key": "carModel",
-									"value": "Aveo",
-									"type": "text"
-								},
-								{
-									"key": "carYear",
-									"value": "2012",
-									"type": "text"
-								},
-								{
-									"key": "town",
-									"value": "Papeete",
-									"type": "text"
-								},
-								{
-									"key": "startDate",
-									"value": "25-12-2022",
-									"type": "text"
-								},
-								{
-									"key": "endDate",
-									"value": "26-12-2022",
-									"type": "text"
-								},
-								{
-									"key": "pricePerDay",
-									"value": "100",
-									"type": "text"
-								},
-								{
-									"key": "image",
-									"type": "file",
-									"src": []
-								}
-							]
-						},
 						"url": {
-							"raw": "http://vps.bosquetjeremy.fr:7000/api/v1/location",
+							"raw": "http://localhost:7000/api/v1/location/:id",
 							"protocol": "http",
 							"host": [
-								"vps",
-								"bosquetjeremy",
-								"fr"
+								"localhost"
 							],
 							"port": "7000",
 							"path": [
 								"api",
 								"v1",
-								"location"
+								"location",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
 							]
-						}
+						},
+						"description": "Recuperation des informations d'une location"
 					},
-					"_postman_previewlanguage": null,
-					"header": null,
-					"cookie": [],
-					"body": null
+					"response": []
 				},
 				{
-					"name": "Date invalide",
-					"originalRequest": {
-						"method": "POST",
+					"name": "/api/v1/location/image/:id",
+					"request": {
+						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "firstName",
-									"value": "Jeremy",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "professionnel@bosquetjeremy.fr",
-									"type": "text"
-								},
-								{
-									"key": "carBrand",
-									"value": "Chevrolet",
-									"type": "text"
-								},
-								{
-									"key": "carModel",
-									"value": "Aveo",
-									"type": "text"
-								},
-								{
-									"key": "carYear",
-									"value": "2012",
-									"type": "text"
-								},
-								{
-									"key": "town",
-									"value": "Papeete",
-									"type": "text"
-								},
-								{
-									"key": "startDate",
-									"value": "27-12-2022",
-									"type": "text"
-								},
-								{
-									"key": "endDate",
-									"value": "26-12-2022",
-									"type": "text"
-								},
-								{
-									"key": "pricePerDay",
-									"value": "100",
-									"type": "text"
-								},
-								{
-									"key": "image",
-									"type": "file",
-									"src": []
-								}
-							]
-						},
 						"url": {
-							"raw": "http://vps.bosquetjeremy.fr:7000/api/v1/location",
+							"raw": "http://localhost:7000/api/v1/location/image/:id",
 							"protocol": "http",
 							"host": [
-								"vps",
-								"bosquetjeremy",
-								"fr"
+								"localhost"
 							],
 							"port": "7000",
 							"path": [
 								"api",
 								"v1",
-								"location"
+								"location",
+								"image",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
 							]
-						}
+						},
+						"description": "Recuperation de l'image d'une location"
 					},
-					"_postman_previewlanguage": null,
-					"header": null,
-					"cookie": [],
-					"body": null
+					"response": []
 				},
 				{
-					"name": "Ville invalide",
-					"originalRequest": {
-						"method": "POST",
+					"name": "/api/v1/location/sortedByAscPrice",
+					"request": {
+						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "firstName",
-									"value": "Jeremy",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "professionnel@bosquetjeremy.fr",
-									"type": "text"
-								},
-								{
-									"key": "carBrand",
-									"value": "Chevrolet",
-									"type": "text"
-								},
-								{
-									"key": "carModel",
-									"value": "Aveo",
-									"type": "text"
-								},
-								{
-									"key": "carYear",
-									"value": "2012",
-									"type": "text"
-								},
-								{
-									"key": "town",
-									"value": "Paris",
-									"type": "text"
-								},
-								{
-									"key": "startDate",
-									"value": "26-12-2022",
-									"type": "text"
-								},
-								{
-									"key": "endDate",
-									"value": "26-12-2022",
-									"type": "text"
-								},
-								{
-									"key": "pricePerDay",
-									"value": "100",
-									"type": "text"
-								},
-								{
-									"key": "image",
-									"type": "file",
-									"src": []
-								}
-							]
-						},
 						"url": {
-							"raw": "http://vps.bosquetjeremy.fr:7000/api/v1/location",
+							"raw": "http://localhost:7000/api/v1/location/sortedByAscPrice",
 							"protocol": "http",
 							"host": [
-								"vps",
-								"bosquetjeremy",
-								"fr"
+								"localhost"
 							],
 							"port": "7000",
 							"path": [
 								"api",
 								"v1",
-								"location"
+								"location",
+								"sortedByAscPrice"
 							]
-						}
+						},
+						"description": "Recuperation de toutes les locations trie par prix croissant"
 					},
-					"_postman_previewlanguage": "json",
-					"header": [],
-					"cookie": [],
-					"body": ""
+					"response": []
 				},
 				{
-					"name": "Annee invalide",
-					"originalRequest": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
+					"name": "/api/v1/location/locationsAndReservations",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
 								{
-									"key": "firstName",
-									"value": "Jeremy",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "professionnel@bosquetjeremy.fr",
-									"type": "text"
-								},
-								{
-									"key": "carBrand",
-									"value": "Chevrolet",
-									"type": "text"
-								},
-								{
-									"key": "carModel",
-									"value": "Aveo",
-									"type": "text"
-								},
-								{
-									"key": "carYear",
-									"value": "2030",
-									"type": "text"
-								},
-								{
-									"key": "town",
-									"value": "Papeete",
-									"type": "text"
-								},
-								{
-									"key": "startDate",
-									"value": "26-12-2022",
-									"type": "text"
-								},
-								{
-									"key": "endDate",
-									"value": "26-12-2022",
-									"type": "text"
-								},
-								{
-									"key": "pricePerDay",
-									"value": "100",
-									"type": "text"
-								},
-								{
-									"key": "image",
-									"type": "file",
-									"src": []
+									"key": "token",
+									"value": "votre_token",
+									"type": "string"
 								}
 							]
 						},
+						"method": "GET",
+						"header": [],
 						"url": {
-							"raw": "http://vps.bosquetjeremy.fr:7000/api/v1/location",
+							"raw": "http://localhost:7000/api/v1/location/locationsAndReservations",
 							"protocol": "http",
 							"host": [
-								"vps",
-								"bosquetjeremy",
-								"fr"
+								"localhost"
 							],
 							"port": "7000",
 							"path": [
 								"api",
 								"v1",
-								"location"
+								"location",
+								"locationsAndReservations"
 							]
-						}
+						},
+						"description": "Recuperation de toutes les informations sur les loueurs et leurs locations\n\nUniquement en etant connecte en tant qu'administrateur"
 					},
-					"_postman_previewlanguage": "json",
-					"header": [],
-					"cookie": [],
-					"body": ""
+					"response": []
 				},
 				{
-					"name": "Prix invalide",
-					"originalRequest": {
-						"method": "POST",
+					"name": "/api/v1/location/reservation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "votre_token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
 						"header": [],
 						"body": {
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "firstName",
-									"value": "Jeremy",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "professionnel@bosquetjeremy.fr",
-									"type": "text"
-								},
-								{
-									"key": "carBrand",
-									"value": "Chevrolet",
-									"type": "text"
-								},
-								{
-									"key": "carModel",
-									"value": "Aveo",
-									"type": "text"
-								},
-								{
-									"key": "carYear",
-									"value": "2012",
-									"type": "text"
-								},
-								{
-									"key": "town",
-									"value": "Papeete",
+									"key": "locationId",
+									"value": "",
 									"type": "text"
 								},
 								{
 									"key": "startDate",
-									"value": "26-12-2022",
+									"value": "DD-MM-YYYY",
 									"type": "text"
-								},
-								{
-									"key": "endDate",
-									"value": "26-12-2022",
-									"type": "text"
-								},
-								{
-									"key": "pricePerDay",
-									"value": "-100",
-									"type": "text"
-								},
-								{
-									"key": "image",
-									"type": "file",
-									"src": []
 								}
 							]
 						},
 						"url": {
-							"raw": "http://vps.bosquetjeremy.fr:7000/api/v1/location",
+							"raw": "http://localhost:7000/api/v1/location/reservation",
 							"protocol": "http",
 							"host": [
-								"vps",
-								"bosquetjeremy",
-								"fr"
+								"localhost"
 							],
 							"port": "7000",
 							"path": [
 								"api",
 								"v1",
-								"location"
+								"location",
+								"reservation"
 							]
-						}
+						},
+						"description": "Suppression d'une reservation d'une location par la date de debut de reservation\n\nUniquement en etant connecte en tant qu'administrateur"
 					},
-					"_postman_previewlanguage": "json",
-					"header": [],
-					"cookie": [],
-					"body": ""
+					"response": []
 				}
 			]
 		},
 		{
-			"name": "/api/v1/location/:id",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:7000/api/v1/location/:id",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7000",
-					"path": [
-						"api",
-						"v1",
-						"location",
-						":id"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": ""
-						}
-					]
+			"name": "Admin",
+			"item": [
+				{
+					"name": "/api/v1/auth/admin/exist",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7000/api/v1/auth/admin/exist",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"admin",
+								"exist"
+							]
+						},
+						"description": "Savoir si il existe deja un compte administrateur"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/auth/admin/profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "votre_token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7000/api/v1/auth/admin/profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"admin",
+								"profile"
+							]
+						},
+						"description": "Recuperation des informations sur l'utilisateur administrateur\n\nUniquement en etant connecte en tant qu'administrateur"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/auth/admin/register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:7000/api/v1/auth/admin/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"admin",
+								"register"
+							]
+						},
+						"description": "Creation d'une utilisateur administrateur (utilisable une seule fois, un seul administrateur possible)"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v1/auth/admin/login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:7000/api/v1/auth/admin/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"admin",
+								"login"
+							]
+						},
+						"description": "Se connecter au compte administrateur et retourne l'access_token permettant les requetes en tant qu'administrateur"
+					},
+					"response": []
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "/api/v1/location/all",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:7000/api/v1/location/all",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7000",
-					"path": [
-						"api",
-						"v1",
-						"location",
-						"all"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "/api/v1/location/image/:id",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:7000/api/v1/location/image/:id",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7000",
-					"path": [
-						"api",
-						"v1",
-						"location",
-						"image",
-						":id"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": ""
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "/api/v1/location/sortedByAscPrice",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:7000/api/v1/location/sortedByAscPrice",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7000",
-					"path": [
-						"api",
-						"v1",
-						"location",
-						"sortedByAscPrice"
-					]
-				}
-			},
-			"response": []
+			]
 		}
 	]
 }

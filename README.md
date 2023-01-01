@@ -5,6 +5,7 @@
 ### Prerequis:
     - Docker
     - docker-compose
+    - Port disponible : 3000 et 7000
     
 ### Mise en place du .env
 
@@ -28,7 +29,7 @@
     #     Port: 3000
     # =================================================
 
-    # NE PAS CHANGER LE PORT
+    # NE PAS CHANGER LE PORT (7000)
     VITE_URL_API=http://localhost:7000 
 
     # =================================================
@@ -39,7 +40,7 @@
     # =================================================
     
     # NE PAS TOUCHER
-    # Actuellement: nom du docker de la base de donneées
+    # Actuellement: nom du docker de la base de données
     DB_HOST=postgres
 
     # METTRE UNE CLE SECRETE DE VOTRE CHOIX (ex: UpuosDFrT5LhaXBEDmjLih6GLsLGFeLw)

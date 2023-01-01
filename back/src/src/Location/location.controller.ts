@@ -42,14 +42,6 @@ export class LocationController {
             code: HttpStatus.CREATED
         });    
     }
-
-    // Recuperer toutes les locations
-    @Get("/all")
-    async getAllLocations(@Res() res): Promise<void> {
-        const locations = await this.locationService.getAllLocations();
-        
-        res.status(HttpStatus.OK).json(locations);
-    }
     
     // Recuperer les locations par prix croissant
     @Get("/sortedByAscPrice")
