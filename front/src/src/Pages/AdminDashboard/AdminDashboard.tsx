@@ -19,6 +19,11 @@ const AdminDashboard = () => {
 	}
 
 	useEffect(() => {
+		if (!localStorage.getItem('token')) {
+			navigate('/');
+			return ;
+		}
+
 		fetchApi('/api/v1/auth/admin/profile')
 		.then((res) => {
 			setUser(res.data);

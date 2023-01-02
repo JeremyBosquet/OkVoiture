@@ -61,6 +61,7 @@ export class LocationController {
                 code: HttpStatus.UNAUTHORIZED,
                 message: "Vous n'avez pas les autorisations"
             })
+            return ;
         }
 
         const data = await this.locationService.getDataFromAllRenters();
@@ -128,6 +129,7 @@ export class LocationController {
                 code: HttpStatus.UNAUTHORIZED,
                 message: "Vous n'avez pas les autorisations"
             })
+            return ;
         }
 
         try {
