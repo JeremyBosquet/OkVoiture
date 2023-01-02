@@ -1,7 +1,7 @@
 import { HttpService } from "@nestjs/axios";
 import { HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { plainToClass, plainToInstance } from "class-transformer";
+import { plainToInstance } from "class-transformer";
 import { Response } from "express";
 import { Repository } from "typeorm";
 import DatabaseImageService from "./databaseImage.service";

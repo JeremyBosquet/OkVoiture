@@ -10,11 +10,12 @@ interface props {
 
 const SelectTown = (props: props) => {
     
+    // Recuperation de toutes les villes dans un tableau pour l'autocomplete
     const getTown = () => {
-        const town = props.data.map((town: Icommunes) => {
+        const towns : string[] = props.data.map((town: Icommunes) => {
             return town.nom;
         });
-        return town;
+        return towns;
     };
     
     const towns = getTown();
