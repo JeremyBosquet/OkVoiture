@@ -11,6 +11,7 @@ const AdminDashboard = () => {
 	const [user, setUser] = useState<IAdmin | undefined>(undefined);
 	const [data, setData] = useState<any>();
 
+
 	const getAllData = async () => {
 		await fetchApi('/api/v1/location/locationsAndReservations')
 		.then((res) => {
@@ -18,20 +19,22 @@ const AdminDashboard = () => {
 		})
 	}
 
-	useEffect(() => {
-		if (!localStorage.getItem('token')) {
-			navigate('/');
-			return ;
-		}
-
-		fetchApi('/api/v1/auth/admin/profile')
+	const getProfile = async () => {
+		await fetchApi('/api/v1/auth/admin/profile')
 		.then((res) => {
-			setUser(res.data);
+			setUser(res.data.data);
 			getAllData();
 		}).catch(() => {
 			localStorage.removeItem('token');
 			navigate('/');
 		})
+	}
+
+	useEffect(() => {
+		if (!localStorage.getItem('token')) {
+			navigate('/');
+		}
+		getProfile();
 	}, []);
 
 	const handleLogout = () => {
@@ -46,11 +49,9 @@ const AdminDashboard = () => {
 				justifyContent: "space-between",
 				alignItems: "center",
 				"@media (max-width: 670px)": {
-					// backgroundColor: "primary.main",
 					display: "flex",
 					justifyContent: "center",
 					p: 1,
-					// alignItems: "center",
 				}
 			}}>
 				<Typography variant="h4">Administration</Typography>

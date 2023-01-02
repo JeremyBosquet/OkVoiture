@@ -50,7 +50,6 @@ export class AdminController {
 		try {
 			await this.adminService.register(body.email, body.password);
 		} catch (error) {
-			console.log(error)
 			res.status(400).send({
 				code: 400,
 				message: "Une erreur est survenue lors de l'enregistrement"
@@ -77,8 +76,8 @@ export class AdminController {
 
 	@UseGuards(JwtAuthGuard)
 	@Get('admin/profile')
-	getProfile(@Request() req, @Res() res) {
-		const user = this.adminService.findOneByEmail(req.user.email);
+	async getProfile(@Request() req, @Res() res) {
+		const user = await this.adminService.findOneByEmail(req.user.email);
 		if (!user) {
 			res.status(HttpStatus.UNAUTHORIZED).send({
 				code: HttpStatus.UNAUTHORIZED,
@@ -86,7 +85,10 @@ export class AdminController {
 			});
 			return;
 		}
-		
-		return plainToInstance(User, user, { excludeExtraneousValues: true });
+
+		res.status(HttpStatus.OK).send({
+			code: HttpStatus.OK,
+			data: plainToInstance(User, user, { excludeExtraneousValues: true })
+		});
 	}
 }

@@ -8,15 +8,18 @@ const AdminAuthPage = () => {
 	const navigate = useNavigate();
 	const { data, error } = getExistAdmin();
 
+	const getProfile = async () => {
+		await fetchApi('/api/v1/auth/admin/profile')
+		.then(() => {
+			navigate('/admin/dashboard');
+		}).catch(() => {
+			localStorage.removeItem('token');
+		})
+	}
+	
 	useEffect(() => {
-        if (localStorage.getItem('token')) {
-            fetchApi('/api/v1/auth/admin/profile')
-            .then(() => {
-                navigate('/admin/dashboard');
-            }).catch(() => {
-                localStorage.removeItem('token');
-            })
-        }
+        if (localStorage.getItem('token'))
+            getProfile();
     }, []);
 
 	if (!data)

@@ -8,16 +8,18 @@ interface props {
 
 const Infos = (props: props) => {
 
+	console.log(props.data)
+
 	const getNumberOfVehicles = () => {
 		let count = 0;
 		for (let i = 0; i < props.data.length; i++) {
-			count += props.data[i].locations.length;
+			count += props.data[i].locations?.length;
 		}
 		return count.toString();
 	}
 
 	const getNumberOfRenters = () => {
-		return (props.data.length).toString();
+		return (props.data?.length).toString();
 	}
 
 	return (
