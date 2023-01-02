@@ -72,6 +72,7 @@ const RenterRow = (props: props) => {
 										<TableCell>Mise en ligne</TableCell>
 										<TableCell>Marque</TableCell>
 										<TableCell>Modele</TableCell>
+										<TableCell>Annee</TableCell>
 										<TableCell>Debut</TableCell>
 										<TableCell>Fin</TableCell>
 										<TableCell>Ville</TableCell>

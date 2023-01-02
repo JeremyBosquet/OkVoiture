@@ -17,6 +17,7 @@ const Row = (props: props) => {
         </TableCell>
         <TableCell>{props.location.carBrand}</TableCell>
         <TableCell>{props.location.carModel}</TableCell>
+        <TableCell>{props.location.carYear}</TableCell>
         <TableCell>{props.location.startDate}</TableCell>
         <TableCell>{props.location.endDate}</TableCell>
         <TableCell>{props.location.town}</TableCell>
