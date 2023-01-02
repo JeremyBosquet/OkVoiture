@@ -33,7 +33,6 @@ const LoginForm = () => {
 
 		await postData('/api/v1/auth/admin/login', data)
 			.then((res) => {
-				console.log(res)
 				localStorage.setItem('token', res.data.data.access_token);
 				setResult({ error: "", success: res.data.message });
 				navigate('/admin/dashboard');
