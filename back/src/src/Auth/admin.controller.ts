@@ -22,26 +22,27 @@ export class AdminController {
 	}
 
 	@Post('admin/register')
-	async registerAdmin(@Body(ValidationPipe) body: registerAdminDto, @Request() req, @Response() res) {
+	async registerAdmin(@Body(ValidationPipe) body: registerAdminDto, @Response() res) {
+		console.log(body)
 		if (!checkEmail(body.email)) {
-			res.status(400).send({
-				code: 400,
+			res.status(HttpStatus.BAD_REQUEST).send({
+				code: HttpStatus.BAD_REQUEST,
 				message: "L'email n'est pas valide"
 			});
 			return;
 		}
 
 		if (body.password.length < 6) {
-			res.status(400).send({
-				code: 400,
+			res.status(HttpStatus.BAD_REQUEST).send({
+				code: HttpStatus.BAD_REQUEST,
 				message: "Le mot de passe doit faire au moins 6 caractères"
 			});
 			return;
 		}
 
 		if (await this.adminService.existAdmin()) {
-			res.status(400).send({
-				code: 400,
+			res.status(HttpStatus.CONFLICT).send({
+				code: HttpStatus.CONFLICT,
 				message: "Un administrateur existe déjà"
 			});
 			return;
@@ -50,15 +51,15 @@ export class AdminController {
 		try {
 			await this.adminService.register(body.email, body.password);
 		} catch (error) {
-			res.status(400).send({
-				code: 400,
+			res.status(HttpStatus.BAD_REQUEST).send({
+				code: HttpStatus.BAD_REQUEST,
 				message: "Une erreur est survenue lors de l'enregistrement"
 			});
 			return;
 		}
 
-		res.status(200).send({
-			code: 200,
+		res.status(HttpStatus.CREATED).send({
+			code: HttpStatus.CREATED,
 			message: "L'enregistrement du compte administrateur a été effectué avec succès"
 		});
 	}
@@ -67,8 +68,8 @@ export class AdminController {
 	@UseGuards(LocalAuthGuard)
 	@Post('admin/login')
 	async login(@Request() req, @Response() res) {
-		res.status(200).send({
-			code: 200,
+		res.status(HttpStatus.OK).send({
+			code: HttpStatus.OK,
 			message: "Vous etes connecté",
 			data: await this.authService.login(req.user),
 		});
