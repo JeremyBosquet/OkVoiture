@@ -5,7 +5,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import React, { useState } from 'react'
 import { postData } from '../../../API/Post';
 import { Ivehicle } from '../../../Interfaces/Vehicle';
-import { calcPrice, convertDateStringToDate, isInReservations } from '../../../utils/utils'
+import { calcPrice, checkEmail, convertDateStringToDate, isInReservations } from '../../../utils/utils'
 
 interface props {
     vehicle: Ivehicle;
@@ -36,7 +36,7 @@ const Reservation = (props: props) => {
         }
 
         // Verification de la syntax de l'email
-        if (!email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,10}$/)) {
+        if (!checkEmail(email)) {
             setResult({ ...result, error: "Veuillez entrer un email valide" });
             return;
         }

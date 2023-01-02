@@ -9,6 +9,7 @@ import { postData } from '../../API/Post';
 import LocationPreview from './LocationPreview/LocationPreview';
 import { newVehicleForm } from '../../Interfaces/Vehicle';
 import { Icommunes } from '../../Interfaces/Fetch';
+import { checkEmail } from '../../utils/utils';
 
 const NewLocationForm = () => {
     const minDateStart = (dayjs(new Date()));
@@ -58,7 +59,7 @@ const NewLocationForm = () => {
         }
 
         // Verification de la syntax de l'email
-        if (!email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,10}$/)) {
+        if (!checkEmail(email)) {
             setResult({ ...result, error: "Veuillez entrer un email valide" });
             return ;
         }
@@ -117,7 +118,7 @@ const NewLocationForm = () => {
 
     // Fonction pour changer l'image 
     const changeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (!e.target?.files)
+        if (!e.target?.files?.length)
             return ;
         setForm({ ...form, image: e.target.files[0] });
         setImageUploaded(e.target.files[0]);
@@ -196,7 +197,7 @@ const NewLocationForm = () => {
                                             <input hidden accept="image/*" type="file" onChange={(e) => changeImage(e)} />
                                         </Button>
                                         { 
-                                            imageUploaded && <Typography variant="h6">{imageUploaded.name}</Typography> 
+                                            imageUploaded && <Typography variant="h6">{imageUploaded?.name}</Typography> 
                                         }
                                     </Grid>
                                     <Grid item xs={12}>

@@ -3,6 +3,7 @@ import { Lock } from '@mui/icons-material';
 import { Alert, Avatar, Box, Button, Container, TextField, Typography } from '@mui/material';
 import { postData } from '../../../API/Post';
 import { useNavigate } from 'react-router-dom';
+import { checkEmail } from '../../../utils/utils';
 
 const LoginForm = () => {
 	const navigate = useNavigate();
@@ -21,7 +22,7 @@ const LoginForm = () => {
 			return;
 		}
 
-		if (!email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,10}$/)) {
+		if (!checkEmail(email)) {
 			setResult({ ...result, error: "Veuillez entrer un email valide" });
 			return;
 		}
@@ -37,8 +38,8 @@ const LoginForm = () => {
 				setResult({ error: "", success: res.data.message });
 				navigate('/admin/dashboard');
 			})
-			.catch(() => {
-				setResult({ error: "Une erreur est survenue..", success: "" });
+			.catch((err) => {
+				setResult({ error: err.response.data.message, success: "" });
 			});
 
 	}

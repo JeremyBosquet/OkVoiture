@@ -34,7 +34,7 @@ export class AdminService {
 		user.role = 'admin';
 
 		if (user.password === null)
-			throw new Error("Error while hashing password");
+			throw new Error("Erreur lors de l'encodage du mot de passe");
 
 		await this.usersRepository.save(user);
 	}

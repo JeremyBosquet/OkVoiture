@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const TopHome = () => {
     return (
         <Grid container display="flex" alignItems="center" justifyContent="center">
-            <Grid container display="flex" alignItems="center" justifyContent="center" xs={12}>
+            <Grid container display="flex" alignItems="center" justifyContent="center">
                 <Grid item xs={6} md={3}>
                     <img src="/topHome.svg" alt="Voiture" width="auto" style={{maxWidth: 400}} />
                 </Grid>

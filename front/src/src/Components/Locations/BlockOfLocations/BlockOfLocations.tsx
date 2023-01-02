@@ -11,14 +11,14 @@ interface props {
 const BlockOfLocations = (props: props) => {
     const [locations, setLocations] = useState<Ivehicle[]>([]);
 
-    function takeFiveLocations(locations: Ivehicle[], page: number) {
+    function takeNbLocations(locations: Ivehicle[], page: number) {
         const start = page * props.nbLocationsPerBlock;
         const end = start + props.nbLocationsPerBlock;
         return locations.slice(start, end);
     }
 
     useEffect(() => {
-        setLocations(takeFiveLocations(props.locations, props.page))
+        setLocations(takeNbLocations(props.locations, props.page))
     }, [props.locations])
  
     return (

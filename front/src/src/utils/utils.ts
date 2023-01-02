@@ -1,6 +1,16 @@
 import dayjs, { Dayjs } from "dayjs";
 import { Ireservation } from "../Interfaces/Vehicle";
 
+// Verifier si un email est valide
+export const checkEmail = (email: string): boolean => {
+    const re = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,10}$/;
+
+    if (email.length < 5 || email.length > 50) {
+        return false;
+    }
+    return re.test(email);
+}
+
 // Convertir une Date String en date
 const convertDateStringToDate = (dateString: string): Date => {
     const dateParts = dateString.replaceAll("-", "/").split("/");

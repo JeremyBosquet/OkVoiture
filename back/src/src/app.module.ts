@@ -9,7 +9,7 @@ import DatabaseImageService from './Location/databaseImage.service';
 import Renter from './Location/Entities/Renter';
 import DatabaseImage from './Location/Entities/DatabaseImage';
 import RenterService from './Location/renter.service';
-import { HttpModule, HttpService } from '@nestjs/axios';
+import { HttpModule } from '@nestjs/axios';
 import { AdminService } from './Auth/admin.service';
 import { AuthModule } from './Auth/auth.module';
 import User from './Auth/Entities/User';
