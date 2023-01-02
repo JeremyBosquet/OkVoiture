@@ -79,13 +79,14 @@ export class AdminController {
 	@Get('admin/profile')
 	getProfile(@Request() req, @Res() res) {
 		const user = this.adminService.findOneByEmail(req.user.email);
-		if (user)
-			return plainToInstance(User, user, { excludeExtraneousValues: true });
-
-		res.status(HttpStatus.UNAUTHORIZED).send({
-			code: HttpStatus.UNAUTHORIZED,
-			message: "Vous n'êtes pas autorisé à accéder à cette ressource"
-		});
-		return [];
+		if (!user) {
+			res.status(HttpStatus.UNAUTHORIZED).send({
+				code: HttpStatus.UNAUTHORIZED,
+				message: "Vous n'êtes pas autorisé à accéder à cette ressource"
+			});
+			return;
+		}
+		
+		return plainToInstance(User, user, { excludeExtraneousValues: true });
 	}
 }
