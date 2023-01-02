@@ -1,4 +1,4 @@
-import { Grid, Paper, Typography } from "@mui/material"
+import { Grid, Paper } from "@mui/material"
 import { RenterData } from "../../../Interfaces/Admin"
 import InfoBox from "../InfoBox/InfoBox"
 

@@ -1,11 +1,11 @@
-import react, { useState } from 'react';
-import { Autocomplete, Grid, TextField } from '@mui/material';
+import { Autocomplete, TextField } from '@mui/material';
 import { Icommunes } from '../../../Interfaces/Fetch';
+import { newVehicleForm } from '../../../Interfaces/Vehicle';
 
 interface props {
     data: Icommunes[];
-    form: any;
-    setForm: any;
+    form: newVehicleForm;
+    setForm: (form: newVehicleForm) => void;
 }
 
 const SelectTown = (props: props) => {
@@ -17,12 +17,7 @@ const SelectTown = (props: props) => {
         return town;
     };
     
-    let towns = getTown();
-
-    const handleChange = (e: any) => {
-        console.log(e.target.selectTown);
-    };
-
+    const towns = getTown();
 
     return (
         <>

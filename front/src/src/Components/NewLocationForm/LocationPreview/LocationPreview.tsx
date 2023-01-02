@@ -1,14 +1,13 @@
-import { Cake, ConnectingAirportsOutlined, Place } from "@mui/icons-material";
-import { Button, ButtonBase, DialogActions, Dialog, DialogContent, Grid, Paper, Typography, Skeleton } from "@mui/material";
+import { Cake, Place } from "@mui/icons-material";
+import { Button, ButtonBase, Grid, Paper, Typography, Skeleton } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import { useEffect, useState } from "react";
-import { Ivehicle } from "../../../Interfaces/Vehicle";
 
 interface VehiclePreview {
     carBrand: string, 
     carModel: string, 
     carYear: string, 
-    town: string, 
+    town: string | null, 
     pricePerDay: string,
     image: File,
 }
@@ -22,7 +21,7 @@ const LocationPreview = (props: props) => {
 
     useEffect(() => {
         if (props.vehicle.image.name !== "image"){
-            var url = URL.createObjectURL(props.vehicle.image);
+            const url = URL.createObjectURL(props.vehicle.image);
             setImageUrl(url);
         }
     }, [props.vehicle.image]);

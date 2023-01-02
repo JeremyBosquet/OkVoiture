@@ -1,11 +1,11 @@
 import dayjs, { Dayjs } from "dayjs";
-import { Ireservation, Ivehicle } from "../Interfaces/Vehicle";
+import { Ireservation } from "../Interfaces/Vehicle";
 
 // Convertir une Date String en date
 const convertDateStringToDate = (dateString: string): Date => {
-    var dateParts = dateString.replaceAll("-", "/").split("/");
-    let d = dateParts;
-    let dat = new Date(d[2] + '/' + d[1] + '/' + d[0]);
+    const dateParts = dateString.replaceAll("-", "/").split("/");
+    const d = dateParts;
+    const dat = new Date(d[2] + '/' + d[1] + '/' + d[0]);
     return dat;
 }
 
@@ -27,9 +27,9 @@ const isInReservations = (reservations: Ireservation[], date: string) => {
 
 // Savoir si une date est entre deux autres dates
 const isBetweenTwoDate = (date: string, dateOne: string, dateTwo: string) => {
-    let ndate = dayjs((convertDateStringToDate(date)));
-    let ndateOne = dayjs((convertDateStringToDate(dateOne)));
-    let ndateTwo = dayjs((convertDateStringToDate(dateTwo)));
+    const ndate = dayjs((convertDateStringToDate(date)));
+    const ndateOne = dayjs((convertDateStringToDate(dateOne)));
+    const ndateTwo = dayjs((convertDateStringToDate(dateTwo)));
 
     if (ndate >= ndateOne && ndate <= ndateTwo)
         return true;

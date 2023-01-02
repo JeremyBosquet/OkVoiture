@@ -1,28 +1,33 @@
-import { HttpStatus } from "@nestjs/common";
 import { Response } from "express";
 
+// Mettre la première lettre en majuscule
 export function capitalizeFirstLetter(string: string) {
+    if (!string)
+        return string;
     string = string.toLowerCase();
     return string[0].toUpperCase() + string.slice(1);
 }
 
+// Changement du format de la date
 export const changeDateFormat = (date: Date): Date => {
-    let dateString = date.toString();
-    var dateParts = dateString.replace(/-/g, "/").split("/");
-    let d = dateParts;
-    let dat = new Date(d[2] + '/' + d[1] + '/' + d[0]);
+    const dateString = date.toString();
+    const dateParts = dateString.replace(/-/g, "/").split("/");
+    const d = dateParts;
+    const dat = new Date(d[2] + '/' + d[1] + '/' + d[0]);
     return dat;
 }
 
+// Conversion d'une string en date
 export const convertDateStringToDate = (dateString: string): Date => {
-    var dateParts = dateString.replace(/-/g, "/").split("/");
-    let d = dateParts;
-    let dat = new Date(d[2] + '/' + d[1] + '/' + d[0]);
+    const dateParts = dateString.replace(/-/g, "/").split("/");
+    const d = dateParts;
+    const dat = new Date(d[2] + '/' + d[1] + '/' + d[0]);
     return dat;
 }
 
+// Verifier si un email est valide
 export const checkEmail = (email: string): boolean => {
-    let re = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,10}$/;
+    const re = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,10}$/;
 
     if (email.length < 5 || email.length > 50) {
         return false;
@@ -30,6 +35,7 @@ export const checkEmail = (email: string): boolean => {
     return re.test(email);
 }
 
+// Creation d'un objet de retour pour les requêtes
 export const createRes = (code: number, message: string, res: Response) => {
     res.status(code).send({
         message: message,

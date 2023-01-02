@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import react from 'react';
 import { getTownFromPolynesia } from '../../API/Fetch';
 import SelectTown from './SelectTown/SelectTown';
-import { Alert, Button, CircularProgress, Grid, Stack, TextField, Typography } from '@mui/material';
+import { Alert, Button, CircularProgress, Grid, TextField, Typography } from '@mui/material';
 import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
 import { postData } from '../../API/Post';
 import LocationPreview from './LocationPreview/LocationPreview';
+import { newVehicleForm } from '../../Interfaces/Vehicle';
+import { Icommunes } from '../../Interfaces/Fetch';
 
 const NewLocationForm = () => {
     const minDateStart = (dayjs(new Date()));
@@ -17,7 +18,7 @@ const NewLocationForm = () => {
     const [imageUploaded, setImageUploaded] = useState<File | undefined>(undefined);
     const [submitting, setSubmitting] = useState<boolean>(false);
 
-    const [form, setForm] = useState<{carBrand: string, carModel: string, carYear: string, town: string, pricePerDay: string, image: File}>({
+    const [form, setForm] = useState<newVehicleForm>({
         carBrand: "",
         carModel: "",
         carYear: "",
@@ -38,17 +39,17 @@ const NewLocationForm = () => {
     if (!data)
         return <div>Chargement...</div>
 
-    const handleSubmit = async (e: any) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setResult({ success: "", error: "" });
 
-        const firstName = e.target.firstName.value;
-        const email = e.target.email.value;
-        const carBrand = e.target.carBrand.value;
-        const carModel = e.target.carModel.value;
-        const carYear = e.target.carYear.value;
-        const town = e.target.selectTown.value;
-        const pricePerDay = e.target.pricePerDay.value;
+        const firstName = e.currentTarget.firstName.value;
+        const email = e.currentTarget.email.value;
+        const carBrand = e.currentTarget.carBrand.value;
+        const carModel = e.currentTarget.carModel.value;
+        const carYear = e.currentTarget.carYear.value;
+        const town = e.currentTarget.selectTown.value;
+        const pricePerDay = e.currentTarget.pricePerDay.value;
 
         // Verification des champs remplis
         if (firstName === "" || email === "" || carBrand === "" || carModel === "" || carYear === "" || town === "" || startDate === null || endDate === null || pricePerDay === "" || imageUploaded === undefined) {
@@ -63,7 +64,7 @@ const NewLocationForm = () => {
         }
 
         // Verification si la ville existe dans la liste des villes de Polynésie depuis la liste de l'API
-        if (!data.find((t: any) => t.nom === town)) {
+        if (!data.find((t: Icommunes) => t.nom === town)) {
             setResult({ ...result, error: "Veuillez entrer une ville valide" });
             return ;
         }
@@ -85,11 +86,11 @@ const NewLocationForm = () => {
 
         // Envoi des données au serveur via l'API
         setSubmitting(true);
-        await postData('/api/v1/location', formData).then((data: any) => {
+        await postData('/api/v1/location', formData).then((data) => {
             setResult({ error: "", success: data.data?.message});
 
             // reset form
-            e.target.reset();
+            e.currentTarget.reset();
             setStartDate(minDateStart);
             setEndDate(minDateEnd);
             setImageUploaded(undefined);
@@ -110,37 +111,31 @@ const NewLocationForm = () => {
     };
     
     // Fonction pour changer les valeurs du formulaire pour le preview
-    const changeForm = (e: any) => {
+    const changeForm = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     }
 
     // Fonction pour changer l'image 
-    const changeImage = (e: any) => {
-        if (!e.target.files[0])
+    const changeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (!e.target?.files)
             return ;
         setForm({ ...form, image: e.target.files[0] });
         setImageUploaded(e.target.files[0]);
     }
 
     // Fonction pour modifier la valeur de l'année du vehicule pour le preview
-    const handleYearChange = (e: any) => {
+    const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const year = e.target.value;
         if (year.length > 4)
-        {
-            e.cancelEvent = true;
-            return ;
-        }
+            return
         setForm({ ...form, carYear: year });
     }
 
     // Fonction pour modifier la valeur du prix par jour pour le preview
-    const handlePriceChange = (e: any) => {
+    const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const price = e.target.value;
         if (price.length > 7)
-        {
-            e.cancelEvent = true;
-            return ;
-        }
+            return
         setForm({ ...form, pricePerDay: price });
     }
     
@@ -160,10 +155,10 @@ const NewLocationForm = () => {
                                         <TextField name="email" id="email" label="Email" type="email" variant="outlined" fullWidth required/>
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <TextField name="carBrand" id="carBrand" label="Marque du véhicule" type="text" variant="outlined" onChange={(e) => changeForm(e)} fullWidth required/>
+                                        <TextField name="carBrand" id="carBrand" label="Marque du véhicule" type="text" variant="outlined" onChange={changeForm} fullWidth required/>
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <TextField name="carModel" id="carModel" label="Modele du véhicule" type="text" variant="outlined" onChange={(e) => changeForm(e)} fullWidth required/>
+                                        <TextField name="carModel" id="carModel" label="Modele du véhicule" type="text" variant="outlined" onChange={changeForm} fullWidth required/>
                                     </Grid>
                                     <Grid item xs={12}>
                                         <TextField name="carYear" id="carYear" label="Année du véhicule" type="number" variant="outlined" onChange={handleYearChange} fullWidth required/>

@@ -20,8 +20,8 @@ export class RenterService {
     }
 
     // Majuscule a la premiere lettre du prenom et minuscule a l'email
-    let firstName = capitalizeFirstLetter(data.firstName);
-    let email = data.email.toLowerCase();
+    const firstName = capitalizeFirstLetter(data.firstName);
+    const email = data.email.toLowerCase();
     
     // Creation du nouveau renter
     const newRenter = this.renterRepository.create({

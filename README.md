@@ -63,6 +63,9 @@ Il est recommandé d'utiliser le makefile.
     
     
 Vous avez désormer accès a l'application web depuis le port `3000` de la machine sur lequel vous avez suivi les instructions et également accès a l'api depuis le port `7000`.
+
+/!\ Aller sur la page d'administration du site (url:3000/admin) afin de créer le compte administrateur.
+
 # Tests (avec postman):
 
 ##### /!\ L'image est requise afin de poster une nouvelle location.
