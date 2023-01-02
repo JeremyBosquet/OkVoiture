@@ -23,7 +23,6 @@ export class AdminController {
 
 	@Post('admin/register')
 	async registerAdmin(@Body(ValidationPipe) body: registerAdminDto, @Response() res) {
-		console.log(body)
 		if (!checkEmail(body.email)) {
 			res.status(HttpStatus.BAD_REQUEST).send({
 				code: HttpStatus.BAD_REQUEST,

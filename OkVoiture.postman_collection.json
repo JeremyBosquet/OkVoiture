@@ -159,10 +159,20 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
 							"cookie": [],
-							"body": null
+							"body": "{\n    \"message\": \"Votre véhicule a bien été ajouté.\",\n    \"code\": 201\n}"
 						},
 						{
 							"name": "Email invalide",
@@ -238,10 +248,20 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
 							"cookie": [],
-							"body": null
+							"body": "{\n    \"message\": \"L'adresse email est invalide\",\n    \"code\": 400\n}"
 						},
 						{
 							"name": "Date invalide",
@@ -317,10 +337,20 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
 							"cookie": [],
-							"body": null
+							"body": "{\n    \"message\": \"La date de debut doit etre inferieur a la date de fin\",\n    \"code\": 400\n}"
 						},
 						{
 							"name": "Ville invalide",
@@ -396,10 +426,20 @@
 									]
 								}
 							},
+							"status": "Bad Request",
+							"code": 400,
 							"_postman_previewlanguage": "json",
-							"header": [],
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
 							"cookie": [],
-							"body": ""
+							"body": "{\n    \"message\": \"La ville n'est pas valide\",\n    \"code\": 400\n}"
 						},
 						{
 							"name": "Annee invalide",
@@ -475,10 +515,20 @@
 									]
 								}
 							},
+							"status": "Bad Request",
+							"code": 400,
 							"_postman_previewlanguage": "json",
-							"header": [],
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
 							"cookie": [],
-							"body": ""
+							"body": "{\n    \"message\": \"L'annee du vehicule est invalide\",\n    \"code\": 400\n}"
 						},
 						{
 							"name": "Prix invalide",
@@ -554,10 +604,20 @@
 									]
 								}
 							},
+							"status": "Bad Request",
+							"code": 400,
 							"_postman_previewlanguage": "json",
-							"header": [],
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
 							"cookie": [],
-							"body": ""
+							"body": "{\n    \"message\": \"Le prix par jour doit etre superieur a 0\",\n    \"code\": 400\n}"
 						}
 					]
 				},
@@ -846,19 +906,13 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "email",
-									"value": "",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "",
-									"type": "text"
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"test@test.com\",\r\n    \"password\": \"testtest\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
 							"raw": "http://localhost:7000/api/v1/auth/admin/register",
@@ -877,7 +931,112 @@
 						},
 						"description": "Creation d'une utilisateur administrateur (utilisable une seule fois, un seul administrateur possible)"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Ok",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"test@test.com\",\r\n    \"password\": \"testtest\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7000/api/v1/auth/admin/register",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7000",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"admin",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 201,\n    \"message\": \"L'enregistrement du compte administrateur a été effectué avec succès\"\n}"
+						},
+						{
+							"name": "Existe deja",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"test@test.com\",\r\n    \"password\": \"testtest\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7000/api/v1/auth/admin/register",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7000",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"admin",
+										"register"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 409,\n    \"message\": \"Un administrateur existe déjà\"\n}"
+						}
+					]
 				},
 				{
 					"name": "/api/v1/auth/admin/login",
@@ -916,7 +1075,148 @@
 						},
 						"description": "Se connecter au compte administrateur et retourne l'access_token permettant les requetes en tant qu'administrateur"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Ok",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"test@test.com\",\r\n    \"password\": \"testtest\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7000/api/v1/auth/admin/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7000",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"admin",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "291"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"123-wSfI7lhkCGyxtGfu/thgmv++3p4\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 02 Jan 2023 14:39:25 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"Vous etes connecté\",\n    \"data\": {\n        \"access_token\": \"access_token\"\n    }\n}"
+						},
+						{
+							"name": "Erreur",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"test@test.com\",\r\n    \"password\": \"testte\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7000/api/v1/auth/admin/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7000",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"admin",
+										"login"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "43"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2b-hGShxOkieaAVDloBubJVM+h58D8\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 02 Jan 2023 14:49:14 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 401,\n    \"message\": \"Unauthorized\"\n}"
+						}
+					]
 				}
 			]
 		}
