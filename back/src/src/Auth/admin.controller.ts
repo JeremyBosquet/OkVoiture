@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Request, Res, Response, UseGuards, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Post, Request, Res, Response, UseGuards, ValidationPipe } from '@nestjs/common';
 import { LocalAuthGuard } from './Guards/local-auth.guard';
 import { AdminService } from './admin.service';
 import { AuthService } from './auth.service';
@@ -77,11 +77,15 @@ export class AdminController {
 
 	@UseGuards(JwtAuthGuard)
 	@Get('admin/profile')
-	getProfile(@Request() req) {
+	getProfile(@Request() req, @Res() res) {
 		const user = this.adminService.findOneByEmail(req.user.email);
 		if (user)
 			return plainToInstance(User, user, { excludeExtraneousValues: true });
 
+		res.status(HttpStatus.UNAUTHORIZED).send({
+			code: HttpStatus.UNAUTHORIZED,
+			message: "Vous n'êtes pas autorisé à accéder à cette ressource"
+		});
 		return [];
 	}
 }
