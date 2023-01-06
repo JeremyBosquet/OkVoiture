@@ -224,6 +224,8 @@ export class LocationService {
         const startDate = changeDateFormat(body.startDate);
         const endDate = changeDateFormat(body.endDate);
 
+        const isOnlySpace = /^\s*$/;
+
         if (!this.databaseFilesService.isValidImage(image)) {
             createRes(HttpStatus.BAD_REQUEST, "L'image est manquante ou invalide (taille max: 10Mo)", res);
             return false;
@@ -234,7 +236,7 @@ export class LocationService {
             return false;
         }
 
-        if (body.firstName.length < 2 || body.firstName.length > 20) {
+        if (body.firstName.length < 2 || body.firstName.length > 20 || isOnlySpace.test(body.firstName)) {
             createRes(HttpStatus.BAD_REQUEST, "Le prenom est invalide", res);
             return false;
         }
@@ -244,12 +246,12 @@ export class LocationService {
             return false;
         }
 
-        if (body.carBrand.length < 2 || body.carBrand.length > 20) {
+        if (body.carBrand.length < 2 || body.carBrand.length > 20 || isOnlySpace.test(body.carBrand)) {
             createRes(HttpStatus.BAD_REQUEST, "La marque du vehicule est invalide", res);
             return false;
         }
 
-        if (body.carModel.length < 2 || body.carModel.length > 20) {
+        if (body.carModel.length < 2 || body.carModel.length > 20 || isOnlySpace.test(body.carModel)) {
             createRes(HttpStatus.BAD_REQUEST, "Le modele du vehicule est invalide", res);
             return false;
         }
@@ -259,7 +261,7 @@ export class LocationService {
             return false;
         }
 
-        if (body.town.length < 2 || body.town.length > 20) {
+        if (body.town.length < 2 || body.town.length > 20 || isOnlySpace.test(body.town)) {
             createRes(HttpStatus.BAD_REQUEST, "La ville est invalide", res);
             return false;
         }
@@ -297,12 +299,14 @@ export class LocationService {
         const startDate = changeDateFormat(body.startDate);
         const endDate = changeDateFormat(body.endDate);
 
+        const isOnlySpace = /^\s*$/;
+
         if (!location) {
             createRes(HttpStatus.BAD_REQUEST, "Aucune location ne correspond a cet id", res);
             return false;
         }        
 
-        if (body.firstName.length < 2 || body.firstName.length > 20) {
+        if (body.firstName.length < 2 || body.firstName.length > 20 || isOnlySpace.test(body.firstName)) {
             createRes(HttpStatus.BAD_REQUEST, "Le prenom est invalide", res);
             return false;
         }
